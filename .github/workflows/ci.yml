@@ -2,7 +2,7 @@ name: CI/CD
 
 on:
   release:
-    types: [published] # Runs only when a release is published
+    types: [created]
 
 jobs:
   build-and-deploy:
