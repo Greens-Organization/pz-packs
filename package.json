@@ -16,6 +16,7 @@
     "type:check": "turbo type:check",
     "docker:up": "turbo run docker:up",
     "docker:down": "turbo run docker:down",
+    "db:studio": "turbo run db:studio",
     "format": "biome format",
     "lint": "biome lint",
     "check": "biome check",

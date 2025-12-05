@@ -26,6 +26,10 @@
     "docker:down": {
       "outputs": [],
       "cache": false
+    },
+    "db:studio": {
+      "outputs": [],
+      "cache": false
     }
   }
 }
