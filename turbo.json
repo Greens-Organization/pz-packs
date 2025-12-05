@@ -13,8 +13,19 @@
       "dependsOn": ["build"],
       "outputs": []
     },
-    "lint": { "outputs": [] },
-    "type:check": { "outputs": [] },
-    "docker:down": { "outputs": [], "cache": false }
+    "lint": {
+      "outputs": []
+    },
+    "type:check": {
+      "outputs": []
+    },
+    "docker:up": {
+      "outputs": [],
+      "cache": false
+    },
+    "docker:down": {
+      "outputs": [],
+      "cache": false
+    }
   }
 }
