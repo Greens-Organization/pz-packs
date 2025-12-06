@@ -1,3 +1,4 @@
+import type { InferSelectModel } from 'drizzle-orm'
 import { pgTable, text } from 'drizzle-orm/pg-core'
 import { createdAt, id, updatedAt } from '../utils/schemas-types'
 
@@ -8,3 +9,5 @@ export const tags = pgTable('tags', {
   createdAt,
   updatedAt,
 })
+
+export type DTag = InferSelectModel<typeof tags>

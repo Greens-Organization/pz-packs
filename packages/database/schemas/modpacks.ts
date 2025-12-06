@@ -1,4 +1,4 @@
-import { relations } from 'drizzle-orm'
+import { type InferSelectModel, relations } from 'drizzle-orm'
 import { boolean, pgTable, text, uuid } from 'drizzle-orm/pg-core'
 import { createdAt, id, updatedAt } from '../utils/schemas-types'
 import { users } from './users'
@@ -18,6 +18,8 @@ export const modpacks = pgTable('modpacks', {
   updatedAt,
 })
 
+export type DModpack = InferSelectModel<typeof modpacks>
+
 export const modpacksMembers = pgTable('modpacks_members', {
   id,
   modpackId: uuid('modpack_id')
@@ -30,6 +32,8 @@ export const modpacksMembers = pgTable('modpacks_members', {
   createdAt,
   updatedAt,
 })
+
+export type DModpackMember = InferSelectModel<typeof modpacksMembers>
 
 export const modpacksRelations = relations(modpacks, ({ many }) => ({
   members: many(modpacksMembers),
