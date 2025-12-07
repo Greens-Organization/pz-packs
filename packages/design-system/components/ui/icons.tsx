@@ -8,6 +8,7 @@ export {
   StarIcon,
   SteamLogoIcon,
   SunIcon,
+  CaretUpDownIcon
 } from '@phosphor-icons/react'
 
 export const Theme = (props: IconProps) => (

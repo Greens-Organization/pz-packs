@@ -1,12 +1,12 @@
 import { ThemeToggle } from './theme-toggle'
-import { UserMenu } from './user-menu'
+import { NavUser } from './nav-user'
 
 export function AppHeader() {
   return (
     <header className="container flex justify-end items-center my-4">
       <nav className="flex flex-row gap-3 items-center">
         <ThemeToggle />
-        <UserMenu />
+        <NavUser />
       </nav>
     </header>
   )
