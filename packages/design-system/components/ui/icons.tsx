@@ -1,8 +1,16 @@
-import type { LucideProps } from 'lucide-react'
+import type { IconProps } from '@phosphor-icons/react'
 
-export { ArrowRight, LogOut, Moon, Settings, Star, Sun } from 'lucide-react'
+export {
+  ArrowRightIcon,
+  GearIcon,
+  MoonIcon,
+  SignOutIcon,
+  StarIcon,
+  SteamLogoIcon,
+  SunIcon,
+} from '@phosphor-icons/react'
 
-export const Theme = (props: LucideProps) => (
+export const Theme = (props: IconProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="24"
