@@ -3,5 +3,12 @@
   "extends": ["@org/linter/base.json"],
   "files": {
     "includes": ["**", "!**/apps/web/src/routeTree.gen.ts"]
+  },
+  "linter": {
+    "rules": {
+      "a11y": {
+        "useSemanticElements": "off"
+      }
+    }
   }
 }
