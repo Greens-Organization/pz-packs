@@ -22,7 +22,8 @@
     "@tanstack/router-plugin": "1.134.15",
     "react": "catalog:",
     "react-dom": "catalog:",
-    "tailwindcss": "catalog:"
+    "tailwindcss": "catalog:",
+    "@tanstack/react-form": "catalog:"
   },
   "devDependencies": {
     "@org/tsconfig": "workspace:*",

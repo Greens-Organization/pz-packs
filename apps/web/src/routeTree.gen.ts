@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './pages/__root'
 import { Route as ModpacksLayoutRouteImport } from './pages/modpacks/layout'
 import { Route as IndexRouteImport } from './pages/index'
 import { Route as ModpacksIndexRouteImport } from './pages/modpacks/index'
+import { Route as ModpacksIdRouteImport } from './pages/modpacks/$id'
 
 const ModpacksLayoutRoute = ModpacksLayoutRouteImport.update({
   id: '/modpacks',
@@ -28,28 +29,36 @@ const ModpacksIndexRoute = ModpacksIndexRouteImport.update({
   path: '/',
   getParentRoute: () => ModpacksLayoutRoute,
 } as any)
+const ModpacksIdRoute = ModpacksIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => ModpacksLayoutRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/modpacks': typeof ModpacksLayoutRouteWithChildren
+  '/modpacks/$id': typeof ModpacksIdRoute
   '/modpacks/': typeof ModpacksIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/modpacks/$id': typeof ModpacksIdRoute
   '/modpacks': typeof ModpacksIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/modpacks': typeof ModpacksLayoutRouteWithChildren
+  '/modpacks/$id': typeof ModpacksIdRoute
   '/modpacks/': typeof ModpacksIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/modpacks' | '/modpacks/'
+  fullPaths: '/' | '/modpacks' | '/modpacks/$id' | '/modpacks/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/modpacks'
-  id: '__root__' | '/' | '/modpacks' | '/modpacks/'
+  to: '/' | '/modpacks/$id' | '/modpacks'
+  id: '__root__' | '/' | '/modpacks' | '/modpacks/$id' | '/modpacks/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -80,14 +89,23 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ModpacksIndexRouteImport
       parentRoute: typeof ModpacksLayoutRoute
     }
+    '/modpacks/$id': {
+      id: '/modpacks/$id'
+      path: '/$id'
+      fullPath: '/modpacks/$id'
+      preLoaderRoute: typeof ModpacksIdRouteImport
+      parentRoute: typeof ModpacksLayoutRoute
+    }
   }
 }
 
 interface ModpacksLayoutRouteChildren {
+  ModpacksIdRoute: typeof ModpacksIdRoute
   ModpacksIndexRoute: typeof ModpacksIndexRoute
 }
 
 const ModpacksLayoutRouteChildren: ModpacksLayoutRouteChildren = {
+  ModpacksIdRoute: ModpacksIdRoute,
   ModpacksIndexRoute: ModpacksIndexRoute,
 }
 

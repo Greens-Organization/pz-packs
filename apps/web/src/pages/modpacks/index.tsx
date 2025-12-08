@@ -1,6 +1,6 @@
 import { z } from '@org/validation/zod'
 import { createFileRoute } from '@tanstack/react-router'
-import { PublicModpacks } from '../components/public-modpacks'
+import { MyModpacksPage } from './my-modpacks-page'
 
 const modpacksSearchSchema = z.object({
   page: z.coerce.number().int().positive().catch(1),
@@ -12,19 +12,5 @@ const modpacksSearchSchema = z.object({
 
 export const Route = createFileRoute('/modpacks/')({
   validateSearch: modpacksSearchSchema,
-  component: RouteComponent,
+  component: MyModpacksPage,
 })
-
-function RouteComponent() {
-  return (
-    <div className="container mx-auto py-8">
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold mb-2">My Modpacks</h1>
-        <p className="text-muted-foreground">
-          Discover and explore community modpacks
-        </p>
-      </div>
-      <PublicModpacks />
-    </div>
-  )
-}
