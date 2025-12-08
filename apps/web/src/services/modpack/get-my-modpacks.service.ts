@@ -17,3 +17,5 @@ export async function getMyModpacksService(filters: ModpackFilters = {}) {
   if (res.status !== 200) return failure(res)
   return success<PaginatedResponse<DModpack>>(res)
 }
+
+export type { ModpackFilters }

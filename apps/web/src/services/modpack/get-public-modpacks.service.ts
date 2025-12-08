@@ -21,8 +21,6 @@ export async function getPublicModpacksService(filters: ModpackFilters = {}) {
     headers: { ...headers },
   })
 
-  console.log(res)
-
   if (res.status !== 200) return failure(res)
   return success<PaginatedResponse<DModpack>>(res)
 }
