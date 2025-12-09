@@ -4,7 +4,7 @@ import { ModpackFilters } from '@/components/modpack/filters/modpack-filters'
 import { ModpackGrid } from '@/components/modpack/modpack-grid'
 import { PaginationControls } from '@/components/pagination'
 import { useMyModpacks } from '@/hooks/modpack'
-import { CreateModpackDialog } from '@/pages/modpacks/components/create-modpack-dialog'
+import { CreateModpackDialog } from '@/pages/modpacks/-components/create-modpack-dialog'
 
 interface MyModpacksSearchParams {
   page?: number

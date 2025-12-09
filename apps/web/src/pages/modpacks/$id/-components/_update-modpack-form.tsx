@@ -12,7 +12,7 @@ import type { UpdateModpackFormData } from '@org/validation/forms/modapack'
 import { useState } from 'react'
 import { useUpdateModpack } from '@/hooks/modpack'
 import type { ModpackWithMembers } from '@/services/modpack/get-modpack-details.service'
-import { ModpackForm } from '../../components/modpack-form'
+import { ModpackForm } from '../../-components/modpack-form'
 
 interface UpdateModpackFormProps {
   modpackId: string

@@ -1,4 +1,4 @@
-import { PublicModpacks } from './components/public-modpacks'
+import { PublicModpacks } from './public-modpacks'
 
 export function HomePage() {
   return (

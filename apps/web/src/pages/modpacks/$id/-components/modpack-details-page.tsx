@@ -9,8 +9,8 @@ import {
 } from '@org/design-system/components/ui/card'
 import { useNavigate, useParams } from '@tanstack/react-router'
 import { useModpackDetails } from '@/hooks/modpack'
-import { ModpackMembers } from './components/modpack-members'
-import { UpdateModpackForm } from './components/update-modpack-form'
+import { UpdateModpackForm } from './_update-modpack-form'
+import { ModpackMembers } from './modpack-members'
 
 export function ModpackDetailsPage() {
   const { id } = useParams({ strict: false }) as { id: string }
