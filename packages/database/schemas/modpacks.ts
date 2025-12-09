@@ -8,9 +8,6 @@ export const modpacks = pgTable('modpacks', {
   id,
   name: text('name').notNull(),
   description: text('description'),
-  mods: uuid('mods')
-    .references(() => mods.id)
-    .array(),
   avatarUrl: text('avatar_url'),
   steamUrl: text('steam_url'),
   owner: uuid('owner')
@@ -40,8 +37,24 @@ export const modpacksMembers = pgTable('modpacks_members', {
 
 export type DModpackMember = InferSelectModel<typeof modpacksMembers>
 
+export const modpacksMods = pgTable('modpacks_mods', {
+  id,
+  modpackId: uuid('modpack_id')
+    .notNull()
+    .references(() => modpacks.id),
+  modId: uuid('mod_id')
+    .notNull()
+    .references(() => mods.id),
+  isActive: boolean('is_active').default(true).notNull(),
+  createdAt,
+  updatedAt,
+})
+
+export type DModpackMod = InferSelectModel<typeof modpacksMods>
+
 export const modpacksRelations = relations(modpacks, ({ many }) => ({
   members: many(modpacksMembers),
+  mods: many(modpacksMods),
 }))
 
 export const modpacksMembersRelations = relations(
@@ -53,3 +66,14 @@ export const modpacksMembersRelations = relations(
     }),
   }),
 )
+
+export const modpacksModsRelations = relations(modpacksMods, ({ one }) => ({
+  modpack: one(modpacks, {
+    fields: [modpacksMods.modpackId],
+    references: [modpacks.id],
+  }),
+  mod: one(mods, {
+    fields: [modpacksMods.modId],
+    references: [mods.id],
+  }),
+}))

@@ -24,7 +24,6 @@ export interface PaginatedResult<T> {
 export interface CreateModpackData {
   name: string
   description?: string | null
-  mods?: string[] | null
   avatarUrl?: string | null
   steamUrl?: string | null
   owner: string
@@ -35,7 +34,6 @@ export interface CreateModpackData {
 export interface UpdateModpackData {
   name?: string
   description?: string | null
-  mods?: string[] | null
   avatarUrl?: string | null
   steamUrl?: string | null
   isPublic?: boolean
@@ -88,7 +86,6 @@ export class ModpackRepository {
       .values({
         name: data.name,
         description: data.description,
-        mods: data.mods,
         avatarUrl: data.avatarUrl,
         steamUrl: data.steamUrl,
         owner: data.owner,
@@ -222,6 +219,9 @@ export class ModpackRepository {
       orderBy: orderByFn(orderByColumn),
       limit,
       offset,
+      with: {
+        mods: true,
+      },
     })
 
     return {
