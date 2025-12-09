@@ -29,6 +29,23 @@ export class ModpackMemberRepository {
   }
 
   /**
+   * Remove a member from the modpack by email (soft delete - marks as inactive)
+   */
+  async removeMemberByEmail(modpackId: string, email: string): Promise<void> {
+    await database
+      .update(modpacksMembers)
+      .set({
+        isActive: false,
+        updatedAt: new Date(),
+      })
+      .from(modpacksMembers)
+      .innerJoin(users, eq(modpacksMembers.userId, users.id))
+      .where(
+        and(eq(modpacksMembers.modpackId, modpackId), eq(users.email, email)),
+      )
+  }
+
+  /**
    * Remove a member from the modpack (soft delete - marks as inactive)
    */
   async removeMember(modpackId: string, userId: string): Promise<void> {
@@ -47,15 +64,32 @@ export class ModpackMemberRepository {
   }
 
   /**
-   * Find all members of a modpack (active only)
+   * Find all members of a modpack (active only) with user information
    */
-  async findMembers(modpackId: string): Promise<DModpackMember[]> {
-    return database.query.modpacksMembers.findMany({
-      where: and(
-        eq(modpacksMembers.modpackId, modpackId),
-        eq(modpacksMembers.isActive, true),
-      ),
-    })
+  async findMembers(modpackId: string) {
+    const result = await database
+      .select({
+        member: modpacksMembers,
+        user: {
+          id: users.id,
+          name: users.name,
+          email: users.email,
+          image: users.image,
+        },
+      })
+      .from(modpacksMembers)
+      .innerJoin(users, eq(modpacksMembers.userId, users.id))
+      .where(
+        and(
+          eq(modpacksMembers.modpackId, modpackId),
+          eq(modpacksMembers.isActive, true),
+        ),
+      )
+
+    return result.map((r) => ({
+      ...r.member,
+      user: r.user,
+    }))
   }
 
   /**

@@ -1,17 +1,20 @@
 import { modpackMemberRepository, modpackRepository } from '@org/database'
+import type { User } from '@/domain/types/auth'
 import { ApiResponse } from '@/utils'
-import type { MemberIdParam } from '../validations'
+import type { ModpackIdParam, RemoveMemberSchema } from '../validations'
 
 interface RemoveMemberControllerParams {
-  params: MemberIdParam
-  memberEmail: string
+  params: ModpackIdParam
+  body: RemoveMemberSchema
+  user: User
 }
 
 export async function removeMemberController({
   params,
-  memberEmail,
+  body,
+  user,
 }: RemoveMemberControllerParams) {
-  const modpack = await modpackRepository.findById(params.modpackId)
+  const modpack = await modpackRepository.findById(params.id)
 
   if (!modpack) {
     return new ApiResponse(
@@ -25,21 +28,7 @@ export async function removeMemberController({
   }
 
   // Check if user is the owner
-  const member = await modpackMemberRepository.findByEmailMember(
-    modpack.id,
-    memberEmail,
-  )
-  if (!member) {
-    return new ApiResponse(
-      {
-        error: {
-          message: 'Member not found',
-        },
-      },
-      404,
-    )
-  }
-  if (modpack.owner !== member.id) {
+  if (modpack.owner !== user.id) {
     return new ApiResponse(
       {
         error: {
@@ -51,11 +40,11 @@ export async function removeMemberController({
   }
 
   // Check if member exists
-  const isMember = await modpackMemberRepository.isMember(
-    params.modpackId,
-    params.memberId,
+  const member = await modpackMemberRepository.findByEmailMember(
+    params.id,
+    body.email,
   )
-  if (!isMember) {
+  if (!member) {
     return new ApiResponse(
       {
         error: {
@@ -66,7 +55,7 @@ export async function removeMemberController({
     )
   }
 
-  await modpackMemberRepository.removeMember(params.modpackId, params.memberId)
+  await modpackMemberRepository.removeMemberByEmail(params.id, body.email)
 
   return new ApiResponse(
     {

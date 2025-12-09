@@ -4,17 +4,20 @@ import { modpackKeys } from './modpack-keys'
 
 interface RemoveMemberParams {
   modpackId: string
-  memberId: string
+  email: string
 }
 
 export function useRemoveModpackMember() {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: ({ modpackId, memberId }: RemoveMemberParams) =>
-      ModpackService.removeMember(modpackId, memberId),
+    mutationFn: ({ modpackId, email }: RemoveMemberParams) =>
+      ModpackService.removeMember(modpackId, email),
     onSuccess: (_, variables) => {
-      // Invalidate specific modpack detail to refresh members list
+      // Invalidate members list and modpack detail
+      queryClient.invalidateQueries({
+        queryKey: modpackKeys.members(variables.modpackId),
+      })
       queryClient.invalidateQueries({
         queryKey: modpackKeys.detail(variables.modpackId),
       })

@@ -12,4 +12,7 @@ export const modpackKeys = {
     [...modpackKeys.myLists(), filters] as const,
   details: () => [...modpackKeys.all, 'detail'] as const,
   detail: (id: string) => [...modpackKeys.details(), id] as const,
+  membersLists: () => [...modpackKeys.all, 'members'] as const,
+  members: (modpackId: string) =>
+    [...modpackKeys.membersLists(), modpackId] as const,
 }

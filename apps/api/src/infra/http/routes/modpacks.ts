@@ -4,6 +4,7 @@ import {
   createModpackSchema,
   listModpacksQuerySchema,
   modpackIdParamSchema,
+  removeMemberSchema,
   updateModpackSchema,
 } from '@/domain/modpack/validations'
 import type { Server } from '../server'
@@ -158,23 +159,22 @@ export function modpacksRoutes(app: Server) {
 
     // Remove member
     route.delete(
-      '/:id/members/:memberId',
-      async ({ status, params, user }) => {
-        const modifiedParams = {
-          modpackId: params.id,
-          memberEmail: params.memberEmail,
-        }
+      '/:id/members',
+      async ({ status, params, body, user }) => {
         const res = await modpackController.removeMember({
-          params: modifiedParams,
+          params,
+          body,
           user,
         })
         return status(res.status, res.value)
       },
       {
         auth: true,
+        params: modpackIdParamSchema,
+        body: removeMemberSchema,
         detail: {
           tags: ['Modpacks'],
-          description: 'Remove a member from the modpack (owner only)',
+          description: 'Remove a member from the modpack by email (owner only)',
           summary: 'Remove Modpack Member',
         },
       },
