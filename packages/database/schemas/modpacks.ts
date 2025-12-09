@@ -1,13 +1,16 @@
 import { type InferSelectModel, relations } from 'drizzle-orm'
 import { boolean, pgTable, text, uuid } from 'drizzle-orm/pg-core'
 import { createdAt, id, updatedAt } from '../utils/schemas-types'
+import { mods } from './mods'
 import { users } from './users'
 
 export const modpacks = pgTable('modpacks', {
   id,
   name: text('name').notNull(),
   description: text('description'),
-  mods: text('mods').array(),
+  mods: uuid('mods')
+    .references(() => mods.id)
+    .array(),
   avatarUrl: text('avatar_url'),
   steamUrl: text('steam_url'),
   owner: uuid('owner')
