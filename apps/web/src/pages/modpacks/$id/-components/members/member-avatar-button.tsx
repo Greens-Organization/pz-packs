@@ -8,18 +8,32 @@ import { cn } from '@org/design-system/lib/utils'
 import type { ModpackMemberWithUser } from '@/services/modpack/get-members.service'
 import { getInitials } from '@/utils/string'
 
-interface MemberAvatarButtonProps {
+interface MemberAvatarButtonProps extends React.ComponentProps<'button'> {
   member: ModpackMemberWithUser
+  readOnly?: boolean
 }
-export function MemberAvatarButton({ member }: MemberAvatarButtonProps) {
+export function MemberAvatarButton({
+  member,
+  readOnly = false,
+  className,
+  ...props
+}: MemberAvatarButtonProps) {
   return (
     <button
       type="button"
-      className={cn('hover:', 'group relative cursor-pointer active:scale-95 ')}
+      className={cn(
+        'group relative active:scale-95',
+        !readOnly && 'cursor-pointer hover:z-10',
+        readOnly && 'cursor-default',
+        className,
+      )}
+      {...props}
     >
-      <div className="size-full opacity-0 group-hover:opacity-100 absolute top-0 right-0 bg-black/5 backdrop-blur-sm z-20 rounded-md flex items-center justify-center border-2">
-        <XIcon className="text-destructive size-4" weight="bold" />
-      </div>
+      {!readOnly && (
+        <div className="size-full opacity-0 group-hover:opacity-100 absolute top-0 right-0 bg-black/5 backdrop-blur-sm z-20 rounded-md flex items-center justify-center border-2">
+          <XIcon className="text-destructive size-4" weight="bold" />
+        </div>
+      )}
       <Avatar className="h-10 w-10 hover:z-10 transition-all border-2 border-border shadow-sm">
         <AvatarImage src={member.user.image || undefined} />
         <AvatarFallback className="size-full rounded-none">

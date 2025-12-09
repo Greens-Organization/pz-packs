@@ -6,7 +6,6 @@ export async function removeModpackMemberService(
   email: string,
 ) {
   const url = `${env.VITE_API_URL}/modpacks/${modpackId}/members`
-
   const res = await fetch(url, {
     method: 'DELETE',
     credentials: 'include',

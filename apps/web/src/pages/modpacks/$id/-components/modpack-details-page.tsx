@@ -1,6 +1,7 @@
 import { Badge } from '@org/design-system/components/ui/badge'
 import { Button } from '@org/design-system/components/ui/button'
 import { useNavigate, useParams } from '@tanstack/react-router'
+import { useCanManageModpack } from '@/hooks'
 import { useModpackDetails } from '@/hooks/modpack'
 import { ModpackMembers } from './members/modpack-members'
 import { UpdateModpackForm } from './update-modpack-form'
@@ -9,6 +10,7 @@ export function ModpackDetailsPage() {
   const { id } = useParams({ strict: false }) as { id: string }
   const navigate = useNavigate()
   const { data: modpack, isLoading, error } = useModpackDetails(id)
+  const canManage = useCanManageModpack(modpack?.owner || '')
 
   if (isLoading) {
     return (
@@ -91,7 +93,7 @@ export function ModpackDetailsPage() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <ModpackMembers modpackId={id} />
+        <ModpackMembers modpackId={id} canManageMembers={canManage} />
       </div>
     </div>
   )

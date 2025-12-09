@@ -131,7 +131,7 @@ export function modpacksRoutes(app: Server) {
         auth: true,
         params: modpackIdParamSchema,
         detail: {
-          tags: ['Modpacks'],
+          tags: ['Members of Modpacks'],
           description: 'List all members of a modpack (owner and members only)',
           summary: 'List Modpack Members',
         },
@@ -150,7 +150,7 @@ export function modpacksRoutes(app: Server) {
         params: modpackIdParamSchema,
         body: addMemberSchema,
         detail: {
-          tags: ['Modpacks'],
+          tags: ['Members of Modpacks'],
           description: 'Add a member to the modpack (owner only)',
           summary: 'Add Modpack Member',
         },
@@ -173,7 +173,7 @@ export function modpacksRoutes(app: Server) {
         params: modpackIdParamSchema,
         body: removeMemberSchema,
         detail: {
-          tags: ['Modpacks'],
+          tags: ['Members of Modpacks'],
           description: 'Remove a member from the modpack by email (owner only)',
           summary: 'Remove Modpack Member',
         },

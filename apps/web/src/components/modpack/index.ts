@@ -1,4 +1,4 @@
-export * from '../../pages/modpacks/$id/-components/members/modpack-members-avatars'
+export * from '../../pages/modpacks/$id/-components/members/members-list'
 export * from '../../pages/modpacks/$id/-components/members/remove-member-dialog'
 export * from './filters/modpack-filters'
 export * from './modpack-card'

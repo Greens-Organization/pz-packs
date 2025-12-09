@@ -1,14 +1,18 @@
-import { ModpackMembersAvatars } from '@/pages/modpacks/$id/-components/members/modpack-members-avatars'
+import { MembersList } from './members-list'
 
 interface ModpackMembersProps {
   modpackId: string
+  canManageMembers?: boolean
 }
 
-export function ModpackMembers({ modpackId }: ModpackMembersProps) {
+export function ModpackMembers({
+  modpackId,
+  canManageMembers = false,
+}: ModpackMembersProps) {
   return (
     <div>
       <h1 className="font-medium">Members</h1>
-      <ModpackMembersAvatars modpackId={modpackId} />
+      <MembersList modpackId={modpackId} canManageMembers={canManageMembers} />
     </div>
   )
 }

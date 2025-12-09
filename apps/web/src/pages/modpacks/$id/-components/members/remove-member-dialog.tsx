@@ -9,6 +9,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@org/design-system/components/ui/alert-dialog'
+import { toast } from '@org/design-system/components/ui/sonner'
 import { useState } from 'react'
 import { useRemoveModpackMember } from '@/hooks/modpack'
 import type { ModpackMemberWithUser } from '@/services/modpack/get-members.service'
@@ -17,12 +18,14 @@ import { MemberAvatarButton } from './member-avatar-button'
 interface RemoveMemberDialogProps {
   modpackId: string
   member: ModpackMemberWithUser
+  canRemove?: boolean
   onSuccess?: () => void
 }
 
 export function RemoveMemberDialog({
   modpackId,
   member,
+  canRemove = false,
   onSuccess,
 }: RemoveMemberDialogProps) {
   const [open, setOpen] = useState(false)
@@ -34,16 +37,27 @@ export function RemoveMemberDialog({
       email: member.user.email,
     })
 
-    if (result.success) {
-      setOpen(false)
-      onSuccess?.()
+    if (!result.success) {
+      toast.error(
+        result.error.message ||
+          'Failed to remove member. Please try again later.',
+      )
+      return
     }
+
+    toast.success('Member removed successfully')
+    setOpen(false)
+    onSuccess?.()
+  }
+
+  if (!canRemove) {
+    return <MemberAvatarButton member={member} readOnly />
   }
 
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger
-        render={() => <MemberAvatarButton member={member} />}
+        render={(props) => <MemberAvatarButton member={member} {...props} />}
       />
       <AlertDialogContent>
         <AlertDialogHeader>

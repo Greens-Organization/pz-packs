@@ -11,39 +11,22 @@ import {
   DropdownMenuTrigger,
 } from '@org/design-system/components/ui/dropdown-menu'
 import { CircleNotchIcon } from '@org/design-system/components/ui/icons'
-import { useAddModpackMember, useModpackMembers } from '@/hooks/modpack'
-
+import { useModpackMembers } from '@/hooks/modpack'
 import { getInitials } from '@/utils/string'
 import { AddMemberButton } from './add-member-button'
+import { AddMemberDialog } from './add-member-dialog'
 import { RemoveMemberDialog } from './remove-member-dialog'
 
-interface ModpackMembersAvatarsProps {
+interface MembersListProps {
   modpackId: string
-  onAddMember?: () => void
+  canManageMembers?: boolean
 }
 
-export function ModpackMembersAvatars({
+export function MembersList({
   modpackId,
-  onAddMember,
-}: ModpackMembersAvatarsProps) {
+  canManageMembers = false,
+}: MembersListProps) {
   const { data: members, isLoading } = useModpackMembers(modpackId)
-  const addModpackMember = useAddModpackMember()
-
-  const handleAddMemberSubmit = async (data: AddMemberModpackFormData) => {
-    const result = await addModpackMember.mutateAsync({
-      id: modpackId,
-      data: {
-        name: data.name,
-        description: data.description,
-        avatarUrl: data.avatarUrl,
-        steamUrl: data.steamUrl,
-      },
-    })
-
-    if (result.success) {
-      setEditDialogOpen(false)
-    }
-  }
 
   if (isLoading) {
     return (
@@ -60,7 +43,12 @@ export function ModpackMembersAvatars({
     return (
       <div className="flex items-center gap-2">
         <span className="text-sm text-muted-foreground">No members yet</span>
-        {onAddMember && <AddMemberButton onAddMember={onAddMember} />}
+        {canManageMembers && (
+          <AddMemberDialog
+            modpackId={modpackId}
+            trigger={(props) => <AddMemberButton {...props} />}
+          />
+        )}
       </div>
     )
   }
@@ -69,12 +57,13 @@ export function ModpackMembersAvatars({
   const remainingCount = members.length - 5
 
   return (
-    <div className="flex items-center -space-x-2">
+    <div className="flex flex-row gap-2 items-center">
       {visibleMembers.map((member) => (
         <RemoveMemberDialog
           key={member.id}
           member={member}
           modpackId={modpackId}
+          canRemove={canManageMembers}
         />
       ))}
       {remainingCount > 0 && (
@@ -115,15 +104,23 @@ export function ModpackMembersAvatars({
                       </p>
                     )}
                   </div>
-                  <RemoveMemberDialog modpackId={modpackId} member={member} />
+                  <RemoveMemberDialog
+                    modpackId={modpackId}
+                    member={member}
+                    canRemove={canManageMembers}
+                  />
                 </DropdownMenuItem>
               ))}
             </DropdownMenuContent>
           </DropdownMenuPositioner>
         </DropdownMenu>
       )}
-      ''
-      {onAddMember && <AddMemberButton onAddMember={onAddMember} />}
+      {canManageMembers && (
+        <AddMemberDialog
+          modpackId={modpackId}
+          trigger={(props) => <AddMemberButton {...props} />}
+        />
+      )}
     </div>
   )
 }
