@@ -162,7 +162,7 @@ export function modpacksRoutes(app: Server) {
       async ({ status, params, user }) => {
         const modifiedParams = {
           modpackId: params.id,
-          memberId: params.memberId,
+          memberEmail: params.memberEmail,
         }
         const res = await modpackController.removeMember({
           params: modifiedParams,

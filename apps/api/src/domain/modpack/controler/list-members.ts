@@ -1,5 +1,5 @@
-import { modpackRepository } from '@org/database'
-import type { User } from '@/domain/types/auth'
+import type { User } from '@org/auth/types'
+import { modpackMemberRepository, modpackRepository } from '@org/database'
 import { ApiResponse } from '@/utils'
 import type { ModpackIdParam } from '../validations'
 
@@ -27,7 +27,7 @@ export async function listMembersController({
 
   // Check if user is owner or member
   const isOwner = modpack.owner === user.id
-  const isMember = await modpackRepository.isMember(params.id, user.id)
+  const isMember = await modpackMemberRepository.isMember(params.id, user.id)
 
   if (!isOwner && !isMember) {
     return new ApiResponse(
@@ -40,7 +40,7 @@ export async function listMembersController({
     )
   }
 
-  const members = await modpackRepository.findMembers(params.id)
+  const members = await modpackMemberRepository.findMembers(params.id)
 
   return new ApiResponse(members, 200)
 }

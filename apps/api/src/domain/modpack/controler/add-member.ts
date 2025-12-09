@@ -1,5 +1,9 @@
-import { modpackRepository, userRepository } from '@org/database'
-import type { User } from '@/domain/types/auth'
+import type { User } from '@org/auth/types'
+import {
+  modpackMemberRepository,
+  modpackRepository,
+  userRepository,
+} from '@org/database'
 import { ApiResponse } from '@/utils'
 import type { AddMemberSchema, ModpackIdParam } from '../validations'
 
@@ -53,7 +57,10 @@ export async function addMemberController({
   }
 
   // Check if user is already a member
-  const isMember = await modpackRepository.isMember(params.id, memberUser.id)
+  const isMember = await modpackMemberRepository.isMember(
+    params.id,
+    memberUser.id,
+  )
   if (isMember) {
     return new ApiResponse(
       {
@@ -65,7 +72,7 @@ export async function addMemberController({
     )
   }
 
-  const member = await modpackRepository.addMember({
+  const member = await modpackMemberRepository.addMember({
     modpackId: params.id,
     userId: memberUser.id,
     permission: body.permission,
