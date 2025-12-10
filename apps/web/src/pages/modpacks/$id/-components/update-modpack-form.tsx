@@ -7,7 +7,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@org/design-system/components/ui/dialog'
-import { PencilIcon } from '@org/design-system/components/ui/icons'
+import { GearIcon, PencilIcon } from '@org/design-system/components/ui/icons'
 import type { UpdateModpackFormData } from '@org/validation/forms/modpack'
 import { useState } from 'react'
 import { useUpdateModpack } from '@/hooks/modpack'
@@ -46,7 +46,7 @@ export function UpdateModpackForm({
     <Dialog open={editDialogOpen} onOpenChange={setEditDialogOpen}>
       <DialogTrigger
         render={
-          <Button>
+          <Button size="icon" className="w-fit h-fit">
             <PencilIcon className="mr-2 h-4 w-4" weight="bold" />
             Edit
           </Button>

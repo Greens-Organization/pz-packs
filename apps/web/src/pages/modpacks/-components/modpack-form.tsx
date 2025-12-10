@@ -4,6 +4,7 @@ import {
   createModpackFormSchema,
 } from '@org/validation/forms/modpack'
 import { SubmitButton } from '@/components/form/submit-button'
+import { SwitchField } from '@/components/form/switch-field'
 import { TextField } from '@/components/form/text-field'
 
 interface ModpackFormProps {
@@ -25,6 +26,7 @@ export function ModpackForm({
       description: defaultValues?.description || undefined,
       avatarUrl: defaultValues?.avatarUrl || undefined,
       steamUrl: defaultValues?.steamUrl || undefined,
+      isPublic: defaultValues?.isPublic || false,
     },
     validators: {
       onSubmit: createModpackFormSchema,
@@ -71,6 +73,13 @@ export function ModpackForm({
           placeholder="https://steamcommunity.com/..."
           disabled={isLoading}
           inputMode="url"
+        />
+        <SwitchField
+          form={form}
+          name="isPublic"
+          label="Public"
+          description="If enabled, your modpack will be visible to everyone."
+          disabled={isLoading}
         />
       </div>
       <SubmitButton

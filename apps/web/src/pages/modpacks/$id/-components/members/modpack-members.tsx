@@ -10,7 +10,7 @@ export function ModpackMembers({
   canManageMembers = false,
 }: ModpackMembersProps) {
   return (
-    <div>
+    <div className="flex flex-col gap-2 items-start">
       <h1 className="font-medium">Members</h1>
       <MembersList modpackId={modpackId} canManageMembers={canManageMembers} />
     </div>

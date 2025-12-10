@@ -20,6 +20,7 @@ export const createModpackFormSchema = z.object({
     })
     .optional()
     .or(z.literal('')),
+  isPublic: z.boolean().default(false),
 })
 
 export type CreateModpackFormData = z.infer<typeof createModpackFormSchema>

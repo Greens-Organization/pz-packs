@@ -1,6 +1,7 @@
 import { Badge } from '@org/design-system/components/ui/badge'
 import { Button } from '@org/design-system/components/ui/button'
-import { useNavigate, useParams } from '@tanstack/react-router'
+import { SteamLogoIcon } from '@org/design-system/components/ui/icons'
+import { Link, useNavigate, useParams } from '@tanstack/react-router'
 import { useCanManageModpack } from '@/hooks'
 import { useModpackDetails } from '@/hooks/modpack'
 import { ModpackMembers } from './members/modpack-members'
@@ -55,7 +56,7 @@ export function ModpackDetailsPage() {
   return (
     <div className="container mx-auto py-8">
       <div className="mb-8">
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex flex-row justify-between gap-4 mb-6">
           <div className="flex flex-col gap-2">
             <div className="flex flex-row gap-2 items-center">
               <h1 className="text-2xl font-bold">{modpack.name}</h1>
@@ -68,34 +69,45 @@ export function ModpackDetailsPage() {
                   Private
                 </Badge>
               )}
+              {modpack.steamUrl && (
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  aria-label="Visit modpack in steam workshop"
+                  render={
+                    <Link
+                      to={modpack.steamUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm text-primary hover:underline"
+                    >
+                      <SteamLogoIcon
+                        className="w-6 h-6 text-foreground"
+                        weight="bold"
+                      />
+                    </Link>
+                  }
+                />
+              )}
             </div>
             {modpack.description && (
-              <p className="text-muted-foreground">{modpack.description}</p>
+              <p className="text-muted-foreground text-sm max-w-2xl">
+                {modpack.description}
+              </p>
             )}
           </div>
-          <div className="flex gap-2">
+          <div className="flex flex-col gap-4 items-end">
             <UpdateModpackForm modpackId={id} modpack={modpack} />
+            <ModpackMembers modpackId={id} canManageMembers={canManage} />
           </div>
         </div>
 
         <div className="flex items-center gap-4 mb-6">
           <div className="flex items-center space-x-2"></div>
-          {modpack.steamUrl && (
-            <a
-              href={modpack.steamUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm text-primary hover:underline"
-            >
-              View on Steam Workshop
-            </a>
-          )}
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <ModpackMembers modpackId={id} canManageMembers={canManage} />
-      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
     </div>
   )
 }
