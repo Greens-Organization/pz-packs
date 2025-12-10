@@ -12,7 +12,7 @@ import { toast } from '@org/design-system/components/ui/sonner'
 import type { CreateModpackFormData } from '@org/validation/forms/modpack'
 import { useState } from 'react'
 import { useCreateModpack } from '@/hooks/modpack'
-import { ModpackForm } from './modpack-form'
+import { CreateModpackForm } from './create-modpack-form'
 
 export function CreateModpackDialog() {
   const [open, setOpen] = useState(false)
@@ -47,7 +47,7 @@ export function CreateModpackDialog() {
             Create a new modpack to organize your favorite mods
           </DialogDescription>
         </DialogHeader>
-        <ModpackForm
+        <CreateModpackForm
           onSubmit={handleSubmit}
           isLoading={createModpack.isPending}
           submitText="Create Modpack"

@@ -13,7 +13,7 @@ function RootComponent() {
     <React.Fragment>
       <HeadContent />
       <ReactQueryProvider>
-        <Toaster position="top-center" />
+        <Toaster position="bottom-center" />
         <AppHeader />
         <Outlet />
       </ReactQueryProvider>

@@ -5,7 +5,7 @@ import { Link, useNavigate, useParams } from '@tanstack/react-router'
 import { useCanManageModpack } from '@/hooks'
 import { useModpackDetails } from '@/hooks/modpack'
 import { ModpackMembers } from './members/modpack-members'
-import { UpdateModpackForm } from './update-modpack-form'
+import { UpdateModpackDialog } from './update-modpack-dialog.tsx'
 
 export function ModpackDetailsPage() {
   const { id } = useParams({ strict: false }) as { id: string }
@@ -97,7 +97,7 @@ export function ModpackDetailsPage() {
             )}
           </div>
           <div className="flex flex-col gap-4 items-end">
-            <UpdateModpackForm modpackId={id} modpack={modpack} />
+            <UpdateModpackDialog modpackId={id} modpack={modpack} />
             <ModpackMembers modpackId={id} canManageMembers={canManage} />
           </div>
         </div>

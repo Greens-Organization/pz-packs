@@ -1,74 +1,92 @@
-import { Button } from '@org/design-system/components/ui/button'
+import { useAppForm } from '@org/design-system/components/ui/form-tanstack'
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@org/design-system/components/ui/dialog'
-import { GearIcon, PencilIcon } from '@org/design-system/components/ui/icons'
-import type { UpdateModpackFormData } from '@org/validation/forms/modpack'
-import { useState } from 'react'
-import { useUpdateModpack } from '@/hooks/modpack'
-import type { ModpackWithMembers } from '@/services/modpack/get-modpack-details.service'
-import { ModpackForm } from '../../-components/modpack-form'
+  type UpdateModpackFormData,
+  updateModpackFormSchema,
+} from '@org/validation/forms/modpack'
+import { SubmitButton } from '@/components/form/submit-button'
+import { SwitchField } from '@/components/form/switch-field'
+import { TextField } from '@/components/form/text-field'
 
 interface UpdateModpackFormProps {
-  modpackId: string
-  modpack: ModpackWithMembers
+  defaultValues?: Partial<UpdateModpackFormData>
+  onSubmit: (data: UpdateModpackFormData) => void | Promise<void>
+  isLoading?: boolean
+  submitText?: string
 }
 
 export function UpdateModpackForm({
-  modpackId,
-  modpack,
+  defaultValues,
+  onSubmit,
+  isLoading = false,
+  submitText = 'Save',
 }: UpdateModpackFormProps) {
-  const [editDialogOpen, setEditDialogOpen] = useState(false)
-  const updateModpack = useUpdateModpack()
-
-  const handleUpdateSubmit = async (data: UpdateModpackFormData) => {
-    const result = await updateModpack.mutateAsync({
-      id: modpackId,
-      data: {
-        name: data.name,
-        description: data.description,
-        avatarUrl: data.avatarUrl,
-        steamUrl: data.steamUrl,
-      },
-    })
-
-    if (result.success) {
-      setEditDialogOpen(false)
-    }
-  }
+  const form = useAppForm({
+    defaultValues: {
+      name: defaultValues?.name || '',
+      description: defaultValues?.description || undefined,
+      avatarUrl: defaultValues?.avatarUrl || undefined,
+      steamUrl: defaultValues?.steamUrl || undefined,
+      isPublic: defaultValues?.isPublic || false,
+    },
+    validators: {
+      onSubmit: updateModpackFormSchema,
+    },
+    onSubmit: ({ value }) => onSubmit(value),
+  })
 
   return (
-    <Dialog open={editDialogOpen} onOpenChange={setEditDialogOpen}>
-      <DialogTrigger
-        render={
-          <Button size="icon" className="w-fit h-fit">
-            <PencilIcon className="mr-2 h-4 w-4" weight="bold" />
-            Edit
-          </Button>
-        }
-      />
-      <DialogContent className="sm:max-w-[500px]">
-        <DialogHeader>
-          <DialogTitle>Edit Modpack</DialogTitle>
-          <DialogDescription>Update your modpack information</DialogDescription>
-        </DialogHeader>
-        <ModpackForm
-          defaultValues={{
-            name: modpack.name,
-            description: modpack.description || '',
-            avatarUrl: modpack.avatarUrl || '',
-            steamUrl: modpack.steamUrl || '',
-          }}
-          onSubmit={handleUpdateSubmit}
-          isLoading={updateModpack.isPending}
-          submitText="Save Changes"
+    <form
+      onSubmit={(e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        form.handleSubmit()
+      }}
+      className="flex flex-col gap-8"
+    >
+      <div className="flex flex-col gap-4">
+        <TextField
+          form={form}
+          name="name"
+          label="Modpack Name *"
+          placeholder="My Awesome Modpack"
+          inputMode="text"
         />
-      </DialogContent>
-    </Dialog>
+        <TextField
+          form={form}
+          name="description"
+          label="Description"
+          placeholder="A collection of mods for..."
+          inputMode="text"
+        />
+        <TextField
+          form={form}
+          name="avatarUrl"
+          label="Avatar URL"
+          placeholder="https://example.com/avatar.png"
+          disabled={isLoading}
+          inputMode="url"
+        />
+        <TextField
+          form={form}
+          name="steamUrl"
+          label="Steam Workshop URL"
+          placeholder="https://steamcommunity.com/..."
+          disabled={isLoading}
+          inputMode="url"
+        />
+        <SwitchField
+          form={form}
+          name="isPublic"
+          label="Public"
+          description="If enabled, your modpack will be visible to everyone."
+          disabled={isLoading}
+        />
+      </div>
+      <SubmitButton
+        isLoading={isLoading}
+        label={submitText}
+        loadingLabel="Saving..."
+      />
+    </form>
   )
 }

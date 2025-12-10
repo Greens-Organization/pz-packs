@@ -29,6 +29,7 @@ export function SwitchField({
                 onCheckedChange={field.handleChange}
                 onBlur={field.handleBlur}
                 name={field.name}
+                {...inputProps}
               />
             </field.Control>
             {description && (
