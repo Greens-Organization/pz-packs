@@ -28,9 +28,9 @@ export function AppHeader() {
           />
           <h1 className="font-bold text-2xl hidden md:block">PZ Packs</h1>
         </Link>
-        <div className="flex flex-row gap-2 items-center flex-wrap">
+        <div className="flex flex-row gap-2 md:gap-6 items-center flex-wrap">
           <Anchor href="/" className={cn(pathname === '/' && 'underline ')}>
-            Home
+            Community
           </Anchor>
           {session ? (
             <Anchor
