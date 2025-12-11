@@ -32,6 +32,7 @@ const badgeVariants = cva('font-semibold rounded', {
       sm: 'px-2 py-1 text-xs',
       md: 'px-2.5 py-1.5 text-sm',
       lg: 'px-3 py-2 text-base',
+      icon: 'p-2',
     },
   },
   defaultVariants: {
@@ -41,7 +42,7 @@ const badgeVariants = cva('font-semibold rounded', {
 })
 
 const badgeButtonVariants = cva(
-  'cursor-pointer transition-all inline-flex items-center justify-center leading-none size-3.5 [&>svg]:opacity-100! [&>svg]:size-3.5 p-0 rounded-md -me-0.5 opacity-60 hover:opacity-100',
+  'cursor-pointer transition-all inline-flex items-center justify-center leading-none size-3.5 [&>svg]:opacity-100! [&>svg]:size-3.5 p-0 rounded-md -me-0.5 opacity-60 hover:opacity-100 shadow-xs shadow-shadow/80',
   {
     variants: {
       variant: {

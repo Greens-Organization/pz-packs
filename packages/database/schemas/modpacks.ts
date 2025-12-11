@@ -13,6 +13,7 @@ export const modpacks = pgTable('modpacks', {
   owner: uuid('owner')
     .notNull()
     .references(() => users.id),
+  isVerified: boolean('is_verified').default(false).notNull(),
   isPublic: boolean('is_public').default(false).notNull(),
   isActive: boolean('is_active').default(true).notNull(),
   createdAt,

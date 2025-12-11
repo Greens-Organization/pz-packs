@@ -2,6 +2,7 @@ import { Badge } from '@org/design-system/components/ui/badge'
 import { Button } from '@org/design-system/components/ui/button'
 import { SteamLogoIcon } from '@org/design-system/components/ui/icons'
 import { Link, useNavigate, useParams } from '@tanstack/react-router'
+import { ModpackVisibilityBadge } from '@/components/modpack/index.ts'
 import { useCanManageModpack, useModpack } from '@/hooks'
 import { Members } from './members/members.tsx'
 import { UpdateModpackDialog } from './update-modpack-dialog.tsx'
@@ -59,15 +60,7 @@ export function MyModpacksPages() {
           <div className="flex flex-col gap-2">
             <div className="flex flex-row gap-2 items-center">
               <h1 className="text-2xl font-bold">{modpack.name}</h1>
-              {modpack.isPublic ? (
-                <Badge variant="solid" size="sm">
-                  Public
-                </Badge>
-              ) : (
-                <Badge variant="solid" size="sm">
-                  Private
-                </Badge>
-              )}
+              <ModpackVisibilityBadge isPublic={modpack.isPublic} />
               {modpack.steamUrl && (
                 <Button
                   variant="ghost"

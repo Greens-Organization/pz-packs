@@ -1,5 +1,4 @@
-export * from '../../pages/modpacks/$id/-components/members/members-list'
-export * from '../../pages/modpacks/$id/-components/members/remove-member-dialog'
-export * from './filters/modpack-filters'
+export * from './filters'
 export * from './modpack-card'
 export * from './modpack-grid'
+export * from './modpack-visibility-badge'

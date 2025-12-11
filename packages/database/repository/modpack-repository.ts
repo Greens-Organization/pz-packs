@@ -300,6 +300,9 @@ export class ModpackRepository {
       orderBy: orderByFn(orderByColumn),
       limit,
       offset,
+      with: {
+        mods: true,
+      },
     })
 
     return {
