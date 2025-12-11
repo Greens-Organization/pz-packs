@@ -36,8 +36,6 @@ export function RemoveMemberDialog({
       modpackId,
       email: member.user.email,
     })
-
-    setOpen(false)
   }
 
   if (!canRemove) {
