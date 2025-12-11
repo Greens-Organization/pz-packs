@@ -1,4 +1,5 @@
 import { Badge } from '@org/design-system/components/ui/badge'
+import { cn } from '@org/design-system/lib/utils'
 
 export function ModpackVisibilityBadge({
   isPublic,
@@ -9,7 +10,11 @@ export function ModpackVisibilityBadge({
 }) {
   if (isPublic)
     return (
-      <Badge variant="outline" size="sm" className={className}>
+      <Badge
+        variant="outline"
+        size="sm"
+        className={cn('bg-background/40', className)}
+      >
         Public
       </Badge>
     )

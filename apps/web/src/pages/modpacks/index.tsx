@@ -9,8 +9,8 @@ const modpacksSearchSchema = z.object({
   sortBy: z
     .enum(['createdAt', 'updatedAt', 'name'])
     .catch('createdAt')
-    .default('createdAt'),
-  sortOrder: z.enum(['asc', 'desc']).catch('desc').default('desc'),
+    .default('updatedAt'),
+  sortOrder: z.enum(['asc', 'desc']).catch('asc').default('desc'),
 })
 
 export type ModpacksFiltersSchema = z.infer<typeof modpacksSearchSchema>

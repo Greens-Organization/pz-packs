@@ -8,8 +8,8 @@ const publicModpacksSearchSchema = z.object({
   search: z.string().optional().catch(undefined),
   sortBy: z
     .enum(['createdAt', 'updatedAt', 'name'])
-    .catch('createdAt')
-    .default('createdAt'),
+    .catch('updatedAt')
+    .default('updatedAt'),
   sortOrder: z.enum(['asc', 'desc']).catch('desc').default('desc'),
 })
 

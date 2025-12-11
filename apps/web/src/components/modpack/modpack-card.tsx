@@ -23,7 +23,7 @@ export function ModpackCard({ data }: ModpackCardProps) {
   const { pathname } = useLocation()
   return (
     <Card
-      className="cursor-pointer hover:shadow-lg transition-shadow duration-200 ease-in-out pt-0 justify-between"
+      className="cursor-pointer hover:shadow-lg transition-shadow duration-200 ease-in-out py-0 justify-between flex-row gap-0"
       onClick={() =>
         navigate({
           from: '/modpacks',
@@ -32,7 +32,7 @@ export function ModpackCard({ data }: ModpackCardProps) {
         })
       }
     >
-      <div className="relative bg-primary/30 dark:bg-primary w-full h-48 min-h-48 flex items-center justify-center rounded-t-lg text-muted-foreground/20 text-4xl">
+      <div className="relative bg-primary/30 dark:bg-primary min-w-40 h-full min-h-48 flex items-center justify-center rounded-l-lg text-muted-foreground/20 text-4xl">
         {pathname !== '/' && (
           <ModpackVisibilityBadge
             isPublic={data.isPublic}
@@ -59,27 +59,33 @@ export function ModpackCard({ data }: ModpackCardProps) {
           />
         )}
       </div>
-      <CardHeader className="flex flex-col items-start gap-4 h-full">
-        <CardTitle className="flex items-center gap-2">
-          <span className="truncate">{data.name}</span>
-          {data.isVerified && <ModpackVerifiedBadge />}
-        </CardTitle>
-        <CardDescription className="line-clamp-2">
-          {data.description}
-        </CardDescription>
-      </CardHeader>
-      <CardFooter className="justify-between border-t border-border/50 h-12">
-        <span className="text-sm font-medium">
-          {data.mods?.length ?? 0} mods
-        </span>
-        {data.steamUrl && (
-          <Link to={data.steamUrl} target="_blank">
-            <Button size="icon" variant="ghost">
-              <SteamLogoIcon className="w-6 h-6" weight="bold" />
-            </Button>
-          </Link>
-        )}
-      </CardFooter>
+      <div className="flex flex-col gap-2 w-full justify-between p-4">
+        <CardHeader className="flex flex-col items-start gap-4 px-0">
+          <div>
+            <CardTitle className="flex items-center gap-2">
+              {data.name}
+            </CardTitle>
+            {data.isVerified && <ModpackVerifiedBadge />}
+          </div>
+          <CardDescription className="line-clamp-2">
+            {data.description}
+          </CardDescription>
+        </CardHeader>
+
+        <CardFooter className="px-0 justify-between">
+          {data.steamUrl && (
+            <Link to={data.steamUrl} target="_blank" className="z-10">
+              <Button size="icon" variant="ghost">
+                <SteamLogoIcon className="w-6 h-6" weight="bold" />
+              </Button>
+            </Link>
+          )}
+
+          <span className="text-sm font-medium only:ml-auto">
+            {data.mods?.length ?? 0} mods
+          </span>
+        </CardFooter>
+      </div>
     </Card>
   )
 }
