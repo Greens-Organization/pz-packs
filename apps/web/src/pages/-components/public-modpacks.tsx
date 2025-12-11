@@ -18,7 +18,7 @@ export function PublicModpacks() {
   const searchParams = useSearch({
     strict: false,
   }) as PublicModpacksSearchParams
-
+  // TODO: refatorar essa pora de paginação
   const filters = {
     page: String(searchParams.page ?? 1),
     limit: String(searchParams.limit ?? 12),

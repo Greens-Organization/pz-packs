@@ -12,6 +12,7 @@ export function useCreateModpack() {
     mutationFn: (data: CreateModpackParams) => ModpackService.create(data),
     onSuccess: () => {
       toast.success('Modpack updated successfully')
+      // TODO: ARRUMA ESSAS KEYS ZUADAS
       queryClient.invalidateQueries({ queryKey: modpackKeys.myLists() })
     },
     onError: (error) => {

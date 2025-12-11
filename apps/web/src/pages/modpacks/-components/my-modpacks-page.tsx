@@ -29,7 +29,7 @@ export function MyModpacksPage() {
   }
 
   const { data, isLoading, error } = useListMyModpacks(filters)
-
+  // TODO: refatorar essa pora de paginação
   const updateURL = useCallback(
     (updates: Partial<MyModpacksSearchParams>) => {
       navigate({
