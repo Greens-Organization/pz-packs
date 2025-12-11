@@ -9,7 +9,7 @@ export function useModpack(
   options?: Omit<UseQueryOptions<DModpack>, 'queryKey' | 'queryFn'>,
 ): UseQueryResult<DModpack> {
   return useQuery({
-    queryKey: modpackKeys.detail(id),
+    queryKey: modpackKeys.get(id),
     queryFn: async () => await ModpackService.get(id),
     staleTime: 1000 * 60 * 5,
     ...options,

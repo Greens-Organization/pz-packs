@@ -1,9 +1,9 @@
 import { addModpackMemberService } from './add-member.service'
-import { getModpackMembersService } from './get-members.service'
+import { listModpackMembersService } from './list-members.service'
 import { removeModpackMemberService } from './remove-member.service'
 
 export const MembersService = {
-  get: getModpackMembersService,
+  list: listModpackMembersService,
   add: addModpackMemberService,
   remove: removeModpackMemberService,
 }

@@ -2,7 +2,7 @@ import { env } from '@/env'
 import { headers } from '@/services/helpers'
 import type { IMemberDTO } from '../dtos'
 
-export async function getModpackMembersService(modpackId: string) {
+export async function listModpackMembersService(modpackId: string) {
   const url = `${env.VITE_API_URL}/modpacks/${modpackId}/members`
 
   const res = await fetch(url, {

@@ -23,10 +23,9 @@ export function useUpdateModpack() {
     onSuccess: (_, variables) => {
       toast.success('Modpack updated successfully')
       queryClient.invalidateQueries({
-        queryKey: modpackKeys.detail(variables.id),
+        queryKey: modpackKeys.get(variables.id),
       })
-      // TODO: ARRUMA ESSAS KEYS ZUADAS
-      queryClient.invalidateQueries({ queryKey: modpackKeys.all() })
+      queryClient.invalidateQueries({ queryKey: modpackKeys.all })
     },
     onError: (error) => {
       toast.error(

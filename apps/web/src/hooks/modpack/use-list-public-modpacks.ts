@@ -14,7 +14,7 @@ export function useListPublicModpacks(
 ): UseQueryResult<PaginatedResponse<IModpackDTO>> {
   return usePaginated<IModpackDTO>({
     queryParams,
-    queryKey: modpackKeys.listPublic(queryParams),
+    queryKey: modpackKeys.publicLists(queryParams),
     queryFn: ModpackService.listPublicModpacks,
     options,
   })
