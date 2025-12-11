@@ -6,12 +6,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@org/design-system/components/ui/select'
-import { useEffect, useState } from 'react'
-
-interface SortByFilterProps {
-  onSortByChange: (sortBy: string) => void
-  initialSortBy?: string
-}
 
 const sortOptions = [
   { label: 'Created Date', value: 'createdAt' },
@@ -21,19 +15,16 @@ const sortOptions = [
 
 export function SortByFilter({
   onSortByChange,
-  initialSortBy = 'createdAt',
-}: SortByFilterProps) {
-  const [sortBy, setSortBy] = useState(initialSortBy)
-
-  useEffect(() => {
-    onSortByChange(sortBy)
-  }, [sortBy, onSortByChange])
-
+  value = 'createdAt',
+}: {
+  onSortByChange: (sortBy: string) => void
+  value?: string
+}) {
   return (
-    <Select value={sortBy} onValueChange={(value) => value && setSortBy(value)}>
+    <Select value={value} onValueChange={(val) => val && onSortByChange(val)}>
       <SelectTrigger className="w-[180px]">
         <SelectValue placeholder="Sort by">
-          {sortOptions.find((option) => option.value === sortBy)?.label}
+          {sortOptions.find((option) => option.value === value)?.label}
         </SelectValue>
       </SelectTrigger>
       <SelectPositioner>

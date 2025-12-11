@@ -3,30 +3,30 @@ import { useEffect, useState } from 'react'
 
 interface SearchFilterProps {
   onSearchChange: (search: string) => void
-  initialSearch?: string
+  value?: string
   debounceTime?: number
 }
 
 export function SearchFilter({
   onSearchChange,
-  initialSearch = '',
+  value = '',
   debounceTime = 500,
 }: SearchFilterProps) {
-  const [search, setSearch] = useState(initialSearch)
+  const [search, setSearch] = useState(value)
 
   useEffect(() => {
-    setSearch(initialSearch)
-  }, [initialSearch])
+    setSearch(value)
+  }, [value])
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      if (search !== initialSearch) {
+      if (search !== value) {
         onSearchChange(search)
       }
     }, debounceTime)
 
     return () => clearTimeout(timer)
-  }, [search, debounceTime, onSearchChange, initialSearch])
+  }, [search, debounceTime, onSearchChange, value])
 
   return (
     <div className="flex-1">

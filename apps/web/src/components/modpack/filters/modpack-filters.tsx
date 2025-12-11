@@ -5,42 +5,36 @@ import { SortOrderFilter } from './sort-order-filter'
 interface ModpackFiltersProps {
   onSearchChange: (search: string) => void
   onSortChange: (sortBy: string, sortOrder: string) => void
-  initialSearch?: string
-  initialSortBy?: string
-  initialSortOrder?: string
+  search?: string
+  sortBy?: string
+  sortOrder?: string
 }
 
 export function ModpackFilters({
   onSearchChange,
   onSortChange,
-  initialSearch = '',
-  initialSortBy = 'createdAt',
-  initialSortOrder = 'desc',
+  search = '',
+  sortBy = 'createdAt',
+  sortOrder = 'desc',
 }: ModpackFiltersProps) {
   const handleSortByChange = (newSortBy: string) => {
-    onSortChange(newSortBy, initialSortOrder)
+    onSortChange(newSortBy, sortOrder)
   }
 
   const handleSortOrderChange = (newSortOrder: string) => {
-    onSortChange(initialSortBy, newSortOrder)
+    onSortChange(sortBy, newSortOrder)
   }
 
   return (
     <div className="flex flex-col md:flex-row gap-4 mb-6">
-      <SearchFilter
-        onSearchChange={onSearchChange}
-        initialSearch={initialSearch}
-      />
+      <SearchFilter onSearchChange={onSearchChange} value={search} />
 
       <div className="flex gap-2">
-        <SortByFilter
-          onSortByChange={handleSortByChange}
-          initialSortBy={initialSortBy}
-        />
+        <SortByFilter onSortByChange={handleSortByChange} value={sortBy} />
 
         <SortOrderFilter
           onSortOrderChange={handleSortOrderChange}
-          initialSortOrder={initialSortOrder}
+          value={sortOrder}
         />
       </div>
     </div>

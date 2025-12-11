@@ -25,9 +25,9 @@ export function PublicModpacks() {
       <ModpackFilters
         onSearchChange={handleSearchChange}
         onSortChange={handleSortChange}
-        initialSearch={filters.search}
-        initialSortBy={filters.sortBy}
-        initialSortOrder={filters.sortOrder}
+        search={filters.search}
+        sortBy={filters.sortBy}
+        sortOrder={filters.sortOrder}
       />
 
       <ModpackGrid

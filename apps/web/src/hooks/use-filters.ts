@@ -11,7 +11,8 @@ export interface PaginationFilters {
 
 export function useFilters<T extends PaginationFilters>() {
   const navigate = useNavigate()
-  const filters = useSearch()
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const filters = useSearch({ strict: false } as any) as T
 
   const setFilters = useCallback(
     (newFilters: Partial<T>) => {
@@ -21,7 +22,8 @@ export function useFilters<T extends PaginationFilters>() {
           ...prev,
           ...newFilters,
         }),
-      })
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } as any)
     },
     [navigate],
   )
