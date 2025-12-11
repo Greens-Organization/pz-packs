@@ -2,8 +2,8 @@ import type { UseQueryOptions, UseQueryResult } from '@tanstack/react-query'
 import type { PaginatedResponse, PaginateQueryParams } from '@/services/dtos'
 import { ModpackService } from '@/services/modpack'
 import type { IModpackDTO } from '@/services/modpack/dtos'
+import { usePaginated } from '../globals'
 import { modpackKeys } from './modpack-keys'
-import { usePaginatedModpacks } from './use-paginated-modpacks'
 
 export function useListPublicModpacks(
   queryParams: PaginateQueryParams = {},
@@ -12,10 +12,10 @@ export function useListPublicModpacks(
     'queryKey' | 'queryFn'
   >,
 ): UseQueryResult<PaginatedResponse<IModpackDTO>> {
-  return usePaginatedModpacks({
-    queryParams
-    queryKey: modpackKeys.publicList(queryParams),
-    queryFn:async ()=> awaitModpackService.listPublicModpacks(queryParams),
+  return usePaginated<IModpackDTO>({
+    queryParams,
+    queryKey: modpackKeys.listPublic(queryParams),
+    queryFn: ModpackService.listPublicModpacks,
     options,
   })
 }

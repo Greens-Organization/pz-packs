@@ -3,7 +3,7 @@ import { useCallback } from 'react'
 import { ModpackFilters } from '@/components/modpack/filters/modpack-filters'
 import { ModpackGrid } from '@/components/modpack/modpack-grid'
 import { PaginationControls } from '@/components/pagination'
-import { useMyModpacks } from '@/hooks/modpack'
+import { useListMyModpacks } from '@/hooks'
 import { CreateModpackDialog } from '@/pages/modpacks/-components/create-modpack-dialog'
 
 interface MyModpacksSearchParams {
@@ -28,7 +28,7 @@ export function MyModpacksPage() {
     sortOrder: searchParams.sortOrder ?? 'desc',
   }
 
-  const { data, isLoading, error } = useMyModpacks(filters)
+  const { data, isLoading, error } = useListMyModpacks(filters)
 
   const updateURL = useCallback(
     (updates: Partial<MyModpacksSearchParams>) => {

@@ -1,32 +1,31 @@
-import type { DModpack } from '@org/database/schemas'
 import type { UseQueryOptions, UseQueryResult } from '@tanstack/react-query'
 import { useQuery } from '@tanstack/react-query'
-import type { PaginatedResponse, PaginateQueryParams } from '@/services/dtos'
+import type {
+  ErrorResponse,
+  PaginatedResponse,
+  PaginateQueryParams,
+} from '@/services/dtos'
 
-interface UsePaginatedModpacksOptions {
+interface UsePaginatedOptions<T> {
   queryParams?: PaginateQueryParams
   queryKey: readonly unknown[]
-  queryFn: (queryParams: PaginateQueryParams) => Promise<{
-    success: boolean
-    data?: PaginatedResponse<DModpack>
-    error?: string
-  }>
-  options?: Omit<
-    UseQueryOptions<PaginatedResponse<DModpack>>,
-    'queryKey' | 'queryFn'
-  >
+  queryFn: (
+    queryParams: PaginateQueryParams,
+  ) => Promise<PaginatedResponse<T>> | Promise<ErrorResponse>
+  options?: Omit<UseQueryOptions<PaginatedResponse<T>>, 'queryKey' | 'queryFn'>
 }
 
-export function usePaginatedModpacks({
+export function usePaginated<T>({
   queryParams = {},
   queryKey,
   queryFn,
   options,
-}: UsePaginatedModpacksOptions): UseQueryResult<PaginatedResponse<DModpack>> {
+}: UsePaginatedOptions<T>): UseQueryResult<PaginatedResponse<T>> {
   return useQuery({
     queryKey,
     queryFn: async () => {
       const result = await queryFn(queryParams)
+      // Arrumar essa resposta
       if (!result.success) {
         return {
           data: [],
@@ -36,9 +35,9 @@ export function usePaginatedModpacks({
             total: 0,
             totalPages: 0,
           },
-        } as PaginatedResponse<DModpack>
+        } as PaginatedResponse<T>
       }
-      return result.data as PaginatedResponse<DModpack>
+      return result.data as PaginatedResponse<T>
     },
     staleTime: 1000 * 60 * 5, // 5 minutes
     ...options,

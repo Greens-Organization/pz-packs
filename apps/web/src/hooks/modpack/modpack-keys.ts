@@ -5,12 +5,12 @@ export const modpackKeys = {
   lists: () => [...modpackKeys.all, 'list'] as const,
   list: (queryParams: PaginateQueryParams) =>
     [...modpackKeys.lists(), queryParams] as const,
-  publicLists: () => [...modpackKeys.all, 'public'] as const,
-  publicList: (queryParams: PaginateQueryParams) =>
-    [...modpackKeys.publicLists(), queryParams] as const,
-  myLists: () => [...modpackKeys.all, 'my'] as const,
-  myList: (queryParams: PaginateQueryParams) =>
-    [...modpackKeys.myLists(), queryParams] as const,
+  listPublics: () => [...modpackKeys.lists(), 'public'] as const,
+  listPublic: (queryParams: PaginateQueryParams) =>
+    [...modpackKeys.listPublics(), queryParams] as const,
+  listMys: () => [...modpackKeys.lists(), 'my'] as const,
+  listMy: (queryParams: PaginateQueryParams) =>
+    [...modpackKeys.listMys(), queryParams] as const,
   details: () => [...modpackKeys.all, 'detail'] as const,
   detail: (id: string) => [...modpackKeys.details(), id] as const,
   membersLists: () => [...modpackKeys.all, 'members'] as const,

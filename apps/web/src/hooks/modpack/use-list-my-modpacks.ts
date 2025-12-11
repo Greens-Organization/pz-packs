@@ -1,20 +1,20 @@
-import type { DModpack } from '@org/database/schemas'
 import type { UseQueryOptions, UseQueryResult } from '@tanstack/react-query'
 import type { PaginatedResponse, PaginateQueryParams } from '@/services/dtos'
 import { ModpackService } from '@/services/modpack'
+import type { IModpackDTO } from '@/services/modpack/dtos'
+import { usePaginated } from '../globals'
 import { modpackKeys } from './modpack-keys'
-import { usePaginatedModpacks } from './use-paginated-modpacks'
 
 export function useListMyModpacks(
   queryParams: PaginateQueryParams = {},
   options?: Omit<
-    UseQueryOptions<PaginatedResponse<DModpack>>,
+    UseQueryOptions<PaginatedResponse<IModpackDTO>>,
     'queryKey' | 'queryFn'
   >,
-): UseQueryResult<PaginatedResponse<DModpack>> {
-  return usePaginatedModpacks({
+): UseQueryResult<PaginatedResponse<IModpackDTO>> {
+  return usePaginated<IModpackDTO>({
     queryParams,
-    queryKey: modpackKeys.myList(queryParams),
+    queryKey: modpackKeys.listMy(queryParams),
     queryFn: ModpackService.listMyModpacks,
     options,
   })

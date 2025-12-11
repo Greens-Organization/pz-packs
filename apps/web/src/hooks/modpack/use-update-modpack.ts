@@ -25,7 +25,7 @@ export function useUpdateModpack() {
       queryClient.invalidateQueries({
         queryKey: modpackKeys.detail(variables.id),
       })
-      queryClient.invalidateQueries({ queryKey: modpackKeys.myLists() })
+      queryClient.invalidateQueries({ queryKey: modpackKeys.() })
     },
     onError: (error) => {
       toast.error(

@@ -3,7 +3,7 @@ import { useCallback } from 'react'
 import { ModpackFilters } from '@/components/modpack/filters/modpack-filters'
 import { ModpackGrid } from '@/components/modpack/modpack-grid'
 import { PaginationControls } from '@/components/pagination'
-import { usePublicModpacks } from '@/hooks/modpack'
+import { useListPublicModpacks } from '@/hooks'
 
 interface PublicModpacksSearchParams {
   page?: number
@@ -27,7 +27,7 @@ export function PublicModpacks() {
     sortOrder: searchParams.sortOrder ?? 'desc',
   }
 
-  const { data, isLoading, error } = usePublicModpacks(filters)
+  const { data, isLoading, error } = useListPublicModpacks(filters)
 
   const updateURL = useCallback(
     (updates: Partial<PublicModpacksSearchParams>) => {

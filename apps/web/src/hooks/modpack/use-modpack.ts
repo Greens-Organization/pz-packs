@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 import { ModpackService } from '@/services/modpack'
 import { modpackKeys } from './modpack-keys'
 
-export function useModpackById(
+export function useModpack(
   id: string,
   options?: Omit<UseQueryOptions<DModpack>, 'queryKey' | 'queryFn'>,
 ): UseQueryResult<DModpack> {

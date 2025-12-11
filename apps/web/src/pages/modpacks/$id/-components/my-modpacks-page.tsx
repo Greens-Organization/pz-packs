@@ -2,15 +2,14 @@ import { Badge } from '@org/design-system/components/ui/badge'
 import { Button } from '@org/design-system/components/ui/button'
 import { SteamLogoIcon } from '@org/design-system/components/ui/icons'
 import { Link, useNavigate, useParams } from '@tanstack/react-router'
-import { useCanManageModpack } from '@/hooks'
-import { useModpackDetails } from '@/hooks/modpack'
+import { useCanManageModpack, useModpack } from '@/hooks'
 import { Members } from './members/members.tsx'
 import { UpdateModpackDialog } from './update-modpack-dialog.tsx'
 
 export function MyModpacksPages() {
   const { id } = useParams({ strict: false }) as { id: string }
   const navigate = useNavigate()
-  const { data: modpack, isLoading, error } = useModpackDetails(id)
+  const { data: modpack, isLoading, error } = useModpack(id)
   const canManage = useCanManageModpack(modpack?.owner || '')
 
   if (isLoading) {

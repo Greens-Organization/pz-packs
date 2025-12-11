@@ -16,6 +16,10 @@ export interface PaginatedResponse<T> {
   }
 }
 
+export interface ErrorResponse {
+  error: { message: string }
+}
+
 export interface ArchiveSuccess {
   message: string
 }
