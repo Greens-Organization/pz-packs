@@ -1,24 +1,21 @@
 import {
   Card,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from '@org/design-system/components/ui/card'
 import { useTheme } from '@org/design-system/providers'
 import { useLocation, useNavigate } from '@tanstack/react-router'
-import type { IModpackDTO } from '@/services/modpack/dtos'
-import { ModpackVerifiedBadge } from './modpack-verified-badge'
-import { ModpackVisibilityBadge } from './modpack-visibility-badge'
+import type { IModDTO } from '@/services/mod/dtos'
 
 interface ModpackCardProps {
-  data: IModpackDTO
+  data: IModDTO
 }
 
-export function ModpackCard({ data }: ModpackCardProps) {
+export function ModCard({ data }: ModpackCardProps) {
   const { theme } = useTheme()
   const navigate = useNavigate()
-  const { pathname } = useLocation()
+
   return (
     <Card
       className="cursor-pointer hover:shadow-lg transition-shadow duration-200 ease-in-out py-0 justify-between flex-row gap-0"
@@ -55,29 +52,13 @@ export function ModpackCard({ data }: ModpackCardProps) {
         <CardHeader className="flex flex-col items-start gap-2 px-0">
           <div className="flex flex-row items-center gap-2">
             <CardTitle>{data.name}</CardTitle>
-            {data.isVerified && <ModpackVerifiedBadge />}
           </div>
           {data.description && (
             <CardDescription className="line-clamp-2">
               {data.description}
             </CardDescription>
           )}
-          {/* {data.steamUrl && (
-            <Link to={data.steamUrl} target="_blank" className="z-10">
-              <Button size="icon" variant="ghost">
-                <SteamLogoIcon className="w-6 h-6" weight="bold" />
-              </Button>
-            </Link>
-          )} */}
         </CardHeader>
-        <CardFooter className="px-0 justify-between ">
-          {pathname !== '/' && (
-            <ModpackVisibilityBadge isPublic={data.isPublic} className="" />
-          )}
-          <span className="text-sm font-medium only:ml-auto">
-            {data.mods?.length ?? 0} mods
-          </span>
-        </CardFooter>
       </div>
     </Card>
   )

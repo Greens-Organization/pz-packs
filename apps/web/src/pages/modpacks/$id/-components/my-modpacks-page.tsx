@@ -1,13 +1,17 @@
 import { Button } from '@org/design-system/components/ui/button'
 import { ButtonGroup } from '@org/design-system/components/ui/button-group.tsx'
-import { SteamLogoIcon } from '@org/design-system/components/ui/icons'
+import {
+  PlusSquareIcon,
+  SteamLogoIcon,
+} from '@org/design-system/components/ui/icons'
 import { Link, useNavigate, useParams } from '@tanstack/react-router'
+import { ModsGrid } from '@/components/mod/mods-grid.tsx'
 import { ModpackVisibilityBadge } from '@/components/modpack/index.ts'
 import { ModpackVerifiedBadge } from '@/components/modpack/modpack-verified-badge.tsx'
 import { useCanManageModpack, useModpack } from '@/hooks'
 import { ArchiveModpackDialog } from './archive-mobdpack-dialog.tsx'
 import { Members } from './members/members.tsx'
-import { UpdateModpackDialog } from './update-modpack-dialog.tsx'
+import { UpdateModpackDialog } from './update/update-modpack-dialog.tsx'
 
 export function MyModpacksPages() {
   const { id } = useParams({ strict: false }) as { id: string }
@@ -56,9 +60,9 @@ export function MyModpacksPages() {
   }
 
   return (
-    <div className="container mx-auto py-8">
-      <div className="mb-8">
-        <div className="flex flex-row justify-between gap-4 mb-6">
+    <div className="container mx-auto py-8 flex flex-col gap-6">
+      <div>
+        <div className="flex flex-row justify-between gap-4 mb-6 flex-wrap">
           <div className="flex flex-col gap-2">
             <div className="flex flex-row gap-2 items-center">
               <h1 className="text-2xl font-bold">{modpack.name}</h1>
@@ -103,6 +107,10 @@ export function MyModpacksPages() {
             </ButtonGroup>
           </ButtonGroup>
         </div>
+      </div>
+      <div>
+        <div className="flex justify-end"></div>
+        <ModsGrid mods={[]} />
       </div>
     </div>
   )

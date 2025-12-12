@@ -7,34 +7,31 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@org/design-system/components/ui/dialog'
-import { PencilIcon } from '@org/design-system/components/ui/icons'
+import { PlusSquareIcon } from '@org/design-system/components/ui/icons'
 import { useState } from 'react'
 import type { IModpackDTO } from '@/services/modpack/dtos'
-import { UpdateModpackForm } from './update-modpack-form'
+import { UpdateModpackForm } from '../update/update-modpack-form'
 
-interface UpdateModpackFormProps {
+interface AddModDialogProps {
   modpack: IModpackDTO
 }
 
-export function UpdateModpackDialog({ modpack }: UpdateModpackFormProps) {
+export function AddModDialog({ modpack }: AddModDialogProps) {
   const [editDialogOpen, setEditDialogOpen] = useState(false)
 
   return (
     <Dialog open={editDialogOpen} onOpenChange={setEditDialogOpen}>
       <DialogTrigger
         render={
-          <Button
-            aria-label="Edit Modpack"
-            title="Edit Modpack"
-            className="p-0 items-center justify-center aspect-square"
-          >
-            <PencilIcon className="h-4 w-4" weight="bold" />
+          <Button>
+            <PlusSquareIcon className="w-5 h-5 mr-2" weight="bold" />
+            Add Mod
           </Button>
         }
       />
       <DialogContent className="sm:max-w-[500px]">
         <DialogHeader>
-          <DialogTitle>Edit Modpack</DialogTitle>
+          <DialogTitle>Add Mod</DialogTitle>
           <DialogDescription>Update your modpack information</DialogDescription>
         </DialogHeader>
         <UpdateModpackForm
