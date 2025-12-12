@@ -100,6 +100,21 @@ export class ModpackMemberRepository {
   }
 
   /**
+   * Find a member by modpack ID and user ID
+   */
+  async findMember(
+    modpackId: string,
+    userId: string,
+  ): Promise<DModpackMember | undefined> {
+    return database.query.modpacksMembers.findFirst({
+      where: and(
+        eq(modpacksMembers.modpackId, modpackId),
+        eq(modpacksMembers.userId, userId),
+      ),
+    })
+  }
+
+  /**
    * Check if a user is a member of a modpack (active only)
    */
   async isMember(modpackId: string, userId: string): Promise<boolean> {
