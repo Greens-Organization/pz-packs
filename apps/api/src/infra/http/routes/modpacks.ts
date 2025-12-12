@@ -1,4 +1,4 @@
-import { addModInModpackSchema } from '@org/validation/forms/mod/add-mod-in-modpack.schema'
+import { addModInModpackSchema } from '@/domain/mod/validation/add-mod-in-modpack.schema'
 import { modpackController } from '@/domain/modpack/controler'
 import {
   addMemberSchema,
