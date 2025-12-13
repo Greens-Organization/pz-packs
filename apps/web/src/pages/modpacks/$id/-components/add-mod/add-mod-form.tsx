@@ -1,44 +1,35 @@
 import { useAppForm } from '@org/design-system/components/ui/form-tanstack'
-import {
-  type UpdateModpackFormData,
-  updateModpackFormSchema,
-} from '@org/validation/forms/modpack'
-import { SubmitButton } from '@/components/form/submit-button'
-import { SwitchField } from '@/components/form/switch-field'
-import { TextField } from '@/components/form/text-field'
-import { useUpdateModpack } from '@/hooks'
-import type { IModpackDTO } from '@/services/modpack/dtos'
+import { useEffect } from 'react'
+import { SubmitButton, TextField } from '@/components/form'
+import { useAddModpackMember } from '@/hooks'
 
-interface UpdateModpackFormProps {
-  modpack: IModpackDTO
+interface AddModFormProps {
   onSuccess: () => void
+  modpackId: string
 }
 
-export function UpdateModpackForm({
-  modpack,
-  onSuccess,
-}: UpdateModpackFormProps) {
-  const updateModpack = useUpdateModpack()
-
+export function AddModForm({ onSuccess, modpackId }: AddModFormProps) {
+  const addMod = useAddModpackMod()
   const form = useAppForm({
     defaultValues: {
-      name: modpack?.name || '',
-      description: modpack?.description || undefined,
-      avatarUrl: modpack?.avatarUrl || undefined,
-      steamUrl: modpack?.steamUrl || undefined,
-      isPublic: modpack?.isPublic || false,
-    } as UpdateModpackFormData,
+      email: '',
+    },
     validators: {
-      onSubmit: updateModpackFormSchema,
+      onSubmit: addModFormSchema,
     },
     onSubmit: async ({ value }) =>
-      await updateModpack.mutateAsync({
-        id: modpack.id,
-        data: value,
+      await addMember.mutateAsync({
+        modpackId,
+        email: value.email,
       }),
   })
 
-  updateModpack.isSuccess && onSuccess()
+  useEffect(() => {
+    if (addMember.isSuccess) {
+      form.reset()
+      onSuccess()
+    }
+  }, [addMember.isSuccess])
 
   return (
     <form
@@ -47,51 +38,21 @@ export function UpdateModpackForm({
         e.stopPropagation()
         form.handleSubmit()
       }}
-      className="flex flex-col gap-8"
+      className="space-y-4"
     >
-      <div className="flex flex-col gap-4">
-        <TextField
-          form={form}
-          name="name"
-          label="Modpack Name *"
-          placeholder="My Awesome Modpack"
-          inputMode="text"
-        />
-        <TextField
-          form={form}
-          name="description"
-          label="Description"
-          placeholder="A collection of mods for..."
-          inputMode="text"
-        />
-        <TextField
-          form={form}
-          name="avatarUrl"
-          label="Avatar URL"
-          placeholder="https://example.com/avatar.png"
-          disabled={updateModpack.isPending}
-          inputMode="url"
-        />
-        <TextField
-          form={form}
-          name="steamUrl"
-          label="Steam Workshop URL"
-          placeholder="https://steamcommunity.com/..."
-          disabled={updateModpack.isPending}
-          inputMode="url"
-        />
-        <SwitchField
-          form={form}
-          name="isPublic"
-          label="Public"
-          description="If enabled, your modpack will be visible to everyone."
-          disabled={updateModpack.isPending}
-        />
-      </div>
+      <TextField
+        form={form}
+        name="modAtribute"
+        label="Mod ID or Steam URL *"
+        placeholder="123456 or https://steamcommunity.com/sharedfiles/filedetails/?id=123456"
+        inputMode="email"
+        disabled={addMember.isPending}
+      />
+
       <SubmitButton
-        isLoading={updateModpack.isPending}
-        label="Save"
-        loadingLabel="Saving..."
+        isLoading={addMember.isPending}
+        label="Add Member"
+        loadingLabel="Adding.."
       />
     </form>
   )
