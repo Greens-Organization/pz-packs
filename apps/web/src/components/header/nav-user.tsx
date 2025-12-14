@@ -20,19 +20,19 @@ import {
   SunIcon,
 } from '@org/design-system/components/ui/icons'
 import { useTheme } from '@org/design-system/providers'
-import { auth } from '@/lib/auth'
+import { authClient } from '@/lib/auth'
 import { getInitials } from '@/utils/string'
 
 export function NavUser() {
   const { theme, toggleTheme } = useTheme()
-  const { isPending, data } = auth.useSession()
+  const { isPending, data } = authClient.useSession()
   if (isPending) return null
 
   if (!data) {
     return (
       <Button
         onClick={() =>
-          auth.signIn.social({
+          authClient.signIn.social({
             provider: 'discord',
             callbackURL: location.origin,
           })
@@ -84,7 +84,7 @@ export function NavUser() {
             {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
           </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => auth.signOut()}>
+          <DropdownMenuItem onClick={() => authClient.signOut()}>
             <SignOutIcon />
             Log out
           </DropdownMenuItem>
