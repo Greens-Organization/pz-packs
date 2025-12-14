@@ -1,13 +1,13 @@
 import { cn } from '@org/design-system/lib/utils'
 import { useTheme } from '@org/design-system/providers'
 import { Link, useLocation } from '@tanstack/react-router'
-import { auth } from '@/lib/auth'
+import { authClient } from '@/lib/auth'
 import { Anchor } from '../anchor'
 import { NavUser } from './nav-user'
 
 export function AppHeader() {
   const { theme } = useTheme()
-  const { data: session } = auth.useSession()
+  const { data: session } = authClient.useSession()
   const { pathname } = useLocation()
 
   return (
