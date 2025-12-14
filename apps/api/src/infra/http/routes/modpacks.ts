@@ -2,10 +2,12 @@ import { addModInModpackSchema } from '@/domain/mod/validation/add-mod-in-modpac
 import { modpackController } from '@/domain/modpack/controler'
 import { makeAddModController } from '@/domain/modpack/factories/make-add-mod-controller'
 import { makeCreateModpackController } from '@/domain/modpack/factories/make-create-modpack-controller'
+import { makeImportModpackController } from '@/domain/modpack/factories/make-import-modpack-controller'
 import { makeListModpacksController } from '@/domain/modpack/factories/make-list-modpacks-controller'
 import {
   addMemberSchema,
   createModpackSchema,
+  importModpackSchema,
   listModpacksQuerySchema,
   listModsQuerySchema,
   modpackIdParamSchema,
@@ -220,6 +222,26 @@ export function modpacksRoutes(app: Server) {
           tags: ['Mods'],
           description: 'Add a mod to the modpack (owner/member only)',
           summary: 'Add Mod',
+        },
+      },
+    )
+
+    // Import modpack from Steam
+    route.post(
+      '/:id/import',
+      async ({ status, params, body, user }) => {
+        const controller = makeImportModpackController()
+        const res = await controller.handle({ params, body, user })
+        return status(res.status, res.value)
+      },
+      {
+        auth: true,
+        params: modpackIdParamSchema,
+        body: importModpackSchema,
+        detail: {
+          tags: ['Modpacks'],
+          description: 'Import mods from a Steam Collection to the modpack',
+          summary: 'Import Modpack from Steam',
         },
       },
     )

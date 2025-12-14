@@ -22,5 +22,17 @@
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
   "emmet.showExpandedAbbreviation": "never",
-  "cSpell.words": ["ilike", "modpack", "modpacks"]
+  "cSpell.words": [
+    "favorited",
+    "Googlebot",
+    "hcontent",
+    "ilike",
+    "modpack",
+    "modpacks",
+    "previewid",
+    "publishedfiledetails",
+    "publishedfileid",
+    "sortorder",
+    "steamcommunity"
+  ]
 }

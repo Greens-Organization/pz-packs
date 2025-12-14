@@ -45,6 +45,7 @@ export interface ScrapedModInfo {
   error?: string | null
   rawDescription?: string
   isCollection?: boolean
+  collectionItems?: string[]
 }
 
 export interface WorkshopInfo {

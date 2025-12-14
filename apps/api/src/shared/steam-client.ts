@@ -67,7 +67,7 @@ export class SteamClient {
 
       if (title === 'Steam Community :: Error') {
         return {
-          workshop_id: parseInt(workshopId),
+          workshop_id: parseInt(workshopId, 10),
           mod_id: null,
           map_folder: null,
           title: 'Error',
@@ -93,6 +93,18 @@ export class SteamClient {
         $('.collectionChildren').length > 0 ||
         $('.subscribeCollection').length > 0
 
+      const collectionItems: string[] = []
+      if (isCollection) {
+        $('.collectionChildren .collectionItem').each((_, element) => {
+          const url = $(element).find('.collectionItemDetails a').attr('href')
+          if (url) {
+            const urlParams = new URL(url)
+            const id = urlParams.searchParams.get('id')
+            if (id) collectionItems.push(id)
+          }
+        })
+      }
+
       $('.requiredItemsContainer a').each((_, element) => {
         const url = $(element).attr('href')
         const name = $(element).find('.requiredItem').text().trim()
@@ -114,6 +126,7 @@ export class SteamClient {
         ...modInfo,
         error: null,
         isCollection,
+        collectionItems,
       }
     } catch (error) {
       console.error('Error scraping workshop page:', error)

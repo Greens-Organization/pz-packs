@@ -1,5 +1,6 @@
 export * from './add-member.schema'
 export * from './create-modpack.schema'
+export * from './import-modpack.schema'
 export * from './list-modpacks.schema'
 export * from './list-mods.schema'
 export * from './params.schema'
