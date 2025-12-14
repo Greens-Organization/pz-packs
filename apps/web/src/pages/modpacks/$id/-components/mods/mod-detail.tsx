@@ -6,23 +6,21 @@ import {
   DialogTrigger,
 } from '@org/design-system/components/ui/dialog'
 import type { IModDTO } from '@/services/mod/dtos'
+import { SteamDescription } from './steam-description'
 
 export function ModDetail({ data }: { data: IModDTO }) {
-  console.log(data)
   return (
     <Dialog>
-      <DialogTrigger className="hover:underline">More Info</DialogTrigger>
-      <DialogContent>
+      <DialogTrigger className="hover:underline text-sm text-muted-foreground">
+        More Info
+      </DialogTrigger>
+      <DialogContent className="max-w-3xl">
         <DialogHeader>
-          <DialogTitle>Mod {data.name}</DialogTitle>
+          <DialogTitle>{data.name}</DialogTitle>
         </DialogHeader>
 
-        <article className="flex flex-col gap-2">
-          {data.description?.split('\n').map((paragraph, index) => (
-            <p key={index} className="mb-2">
-              {paragraph}
-            </p>
-          ))}
+        <article className="overflow-y-auto w-full max-h-[70vh] pr-2">
+          <SteamDescription content={data.description} />
         </article>
       </DialogContent>
     </Dialog>
