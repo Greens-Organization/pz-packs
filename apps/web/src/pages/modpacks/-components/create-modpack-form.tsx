@@ -4,8 +4,8 @@ import {
   createModpackFormSchema,
 } from '@org/validation/forms/modpack'
 import { useEffect } from 'react'
+import { TextAreaField, TextField } from '@/components/form'
 import { SubmitButton } from '@/components/form/submit-button'
-import { TextField } from '@/components/form/text-field'
 import { useCreateModpack } from '@/hooks'
 
 interface CreateModpackFormProps {
@@ -46,7 +46,7 @@ export function CreateModpackForm({ onSuccess }: CreateModpackFormProps) {
           placeholder="My Awesome Modpack"
           inputMode="text"
         />
-        <TextField
+        <TextAreaField
           form={form}
           name="description"
           label="Description"
@@ -60,6 +60,7 @@ export function CreateModpackForm({ onSuccess }: CreateModpackFormProps) {
           placeholder="https://example.com/avatar.png"
           disabled={createModpack.isPending}
           inputMode="url"
+          description="Recommend an image with a square aspect ratio and a resolution of 1024px x 1024px."
         />
         <TextField
           form={form}

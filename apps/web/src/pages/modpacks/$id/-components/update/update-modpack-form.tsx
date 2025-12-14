@@ -3,9 +3,9 @@ import {
   type UpdateModpackFormData,
   updateModpackFormSchema,
 } from '@org/validation/forms/modpack'
+import { TextAreaField, TextField } from '@/components/form'
 import { SubmitButton } from '@/components/form/submit-button'
 import { SwitchField } from '@/components/form/switch-field'
-import { TextField } from '@/components/form/text-field'
 import { useUpdateModpack } from '@/hooks'
 import type { IModpackDTO } from '@/services/modpack/dtos'
 
@@ -57,7 +57,7 @@ export function UpdateModpackForm({
           placeholder="My Awesome Modpack"
           inputMode="text"
         />
-        <TextField
+        <TextAreaField
           form={form}
           name="description"
           label="Description"
@@ -71,6 +71,7 @@ export function UpdateModpackForm({
           placeholder="https://example.com/avatar.png"
           disabled={updateModpack.isPending}
           inputMode="url"
+          description="Recommend an image with a square aspect ratio and a resolution of 1024px x 1024px."
         />
         <TextField
           form={form}
