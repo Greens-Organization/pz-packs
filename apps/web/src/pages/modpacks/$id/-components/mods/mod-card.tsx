@@ -1,6 +1,7 @@
 import {
   Card,
   CardDescription,
+  CardHeader,
   CardTitle,
 } from '@org/design-system/components/ui/card'
 import { useTheme } from '@org/design-system/providers'
@@ -18,6 +19,8 @@ export function ModCard({ data, modpackId, canManage }: ModCardProps) {
   const { theme } = useTheme()
 
   if (!data || !modpackId) return null
+
+  console.log(data)
 
   return (
     <Card className="flex flex-row items-center justify-between p-0 gap-4 overflow-clip">
