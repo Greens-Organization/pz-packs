@@ -1,10 +1,8 @@
 import { addMemberController } from './add-member'
 import { addModController } from './add-mod'
 import { archiveModpackController } from './archive'
-import { createModpackController } from './create'
 import { getModpackByIdController } from './get-by-id'
 import { getPublicModpackByIdController } from './get-public-by-id'
-import { listPublicModpacksController } from './list'
 import { listMembersController } from './list-members'
 import { listModsController } from './list-mods'
 import { listMyModpacksController } from './list-my'
@@ -13,10 +11,8 @@ import { removeModController } from './remove-mod'
 import { updateModpackController } from './update'
 
 export const modpackController = {
-  create: createModpackController,
   update: updateModpackController,
   archive: archiveModpackController,
-  listPublic: listPublicModpacksController,
   listMy: listMyModpacksController,
   getById: getModpackByIdController,
   getPublicById: getPublicModpackByIdController,

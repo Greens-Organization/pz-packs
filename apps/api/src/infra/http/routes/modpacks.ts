@@ -1,5 +1,7 @@
 import { addModInModpackSchema } from '@/domain/mod/validation/add-mod-in-modpack.schema'
 import { modpackController } from '@/domain/modpack/controler'
+import { makeCreateModpackController } from '@/domain/modpack/factories/make-create-modpack-controller'
+import { makeListModpacksController } from '@/domain/modpack/factories/make-list-modpacks-controller'
 import {
   addMemberSchema,
   createModpackSchema,
@@ -18,7 +20,8 @@ export function modpacksRoutes(app: Server) {
     route.get(
       '/public',
       async ({ status, query }) => {
-        const res = await modpackController.listPublic({ query })
+        const controller = makeListModpacksController()
+        const res = await controller.handle({ query })
         return status(res.status, res.value)
       },
       {
@@ -71,7 +74,8 @@ export function modpacksRoutes(app: Server) {
     route.post(
       '/',
       async ({ status, body, user }) => {
-        const res = await modpackController.create({ body, user })
+        const controller = makeCreateModpackController()
+        const res = await controller.handle({ body, user })
         return status(res.status, res.value)
       },
       {

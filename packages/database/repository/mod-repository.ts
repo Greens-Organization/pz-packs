@@ -67,6 +67,62 @@ export class ModRepository {
     return mod
   }
 
+  async findAll(params: ListModsParams) {
+    const {
+      page = 1,
+      limit = 10,
+      search,
+      sortBy = 'createdAt',
+      sortOrder = 'desc',
+    } = params
+    const offset = (page - 1) * limit
+
+    const conditions = [eq(mods.isActive, true)]
+
+    if (search) {
+      const searchCondition = or(
+        ilike(mods.name, `%${search}%`),
+        ilike(mods.workshopId, `%${search}%`),
+      )
+      if (searchCondition) {
+        conditions.push(searchCondition)
+      }
+    }
+
+    let orderByClause = desc(mods.createdAt)
+
+    if (sortBy === 'createdAt') {
+      orderByClause =
+        sortOrder === 'asc' ? asc(mods.createdAt) : desc(mods.createdAt)
+    } else if (sortBy === 'updatedAt') {
+      orderByClause =
+        sortOrder === 'asc' ? asc(mods.updatedAt) : desc(mods.updatedAt)
+    }
+
+    const [{ count: total }] = await database
+      .select({ count: sql<number>`cast(count(*) as integer)` })
+      .from(mods)
+      .where(and(...conditions))
+
+    const data = await database
+      .select()
+      .from(mods)
+      .where(and(...conditions))
+      .orderBy(orderByClause)
+      .limit(limit)
+      .offset(offset)
+
+    return {
+      data,
+      pagination: {
+        page,
+        limit,
+        total,
+        totalPages: Math.ceil(total / limit),
+      },
+    }
+  }
+
   async list(params: ListModsParams) {
     const {
       page = 1,
