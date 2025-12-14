@@ -4,6 +4,7 @@ import { useListModpackMods } from '@/hooks/modpack/mod/use-list-modpack-mods'
 import { useFilters } from '@/hooks/use-filters'
 import type { ModsFiltersSchema } from '../../index'
 import { AddModDialog } from '../add-mod/add-mod-dialog'
+import { ImportModpackDialog } from '../import-modpack/import-modpack-dialog'
 import { ModCard } from './mod-card'
 
 interface ModsListProps {
@@ -32,7 +33,12 @@ export function ModsList({ modpackId, canManage }: ModsListProps) {
             ? `Mods (${data?.pagination.total ?? 0})`
             : 'Mods'}
         </h2>
-        <AddModDialog modpackId={modpackId} />
+        {canManage && (
+          <div className="flex gap-2">
+            <ImportModpackDialog modpackId={modpackId} />
+            <AddModDialog modpackId={modpackId} />
+          </div>
+        )}
       </div>
 
       <ModpackFilters
