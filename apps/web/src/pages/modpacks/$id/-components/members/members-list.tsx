@@ -98,12 +98,12 @@ export function MembersList({
                       <p className="text-xs truncate">{member.user.email}</p>
                     )}
                   </div>
-                  {canManageMembers && (
+                  {canManageMembers && !member.permission.includes('owner') && (
                     <RemoveMemberDialog
                       modpackId={modpackId}
                       member={member}
                       canRemove={
-                        canManageMembers || !member.permission.includes('owner')
+                        canManageMembers && !member.permission.includes('owner')
                       }
                       trigger={(props) => (
                         <Button
