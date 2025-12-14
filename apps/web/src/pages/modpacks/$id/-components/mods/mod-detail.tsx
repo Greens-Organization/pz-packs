@@ -1,5 +1,7 @@
+import { Button } from '@org/design-system/components/ui/button'
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogHeader,
   DialogTitle,
@@ -22,6 +24,7 @@ export function ModDetail({ data }: { data: IModDTO }) {
         <article className="overflow-y-auto w-full max-h-[70vh] pr-2">
           <SteamDescription content={data.description} />
         </article>
+        <DialogClose render={<Button>Close</Button>} />
       </DialogContent>
     </Dialog>
   )
