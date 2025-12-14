@@ -22,9 +22,10 @@ export class CreateModpackController {
         owner: user.id,
       })
       return new ApiResponse(data, 201)
-    } catch (error: any) {
-      if (error.message === 'Modpack with this name already exists') {
-        return new ApiResponse({ error: { message: error.message } }, 409)
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : 'Unknown error'
+      if (message === 'Modpack with this name already exists') {
+        return new ApiResponse({ error: { message: message } }, 409)
       }
       throw error
     }

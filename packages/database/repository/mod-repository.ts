@@ -11,7 +11,7 @@ import {
 } from 'drizzle-orm'
 import { database } from '../index'
 import type { DMod } from '../schemas'
-import { modpacksMods, mods } from '../schemas'
+import { modpacksMods, mods, tags } from '../schemas'
 
 export interface CreateModData {
   name: string
@@ -35,35 +35,84 @@ export interface ListModsParams {
   sortOrder?: 'asc' | 'desc'
 }
 
+export interface TagSummary {
+  id: string
+  name: string
+}
+
+export interface ModWithTags extends Omit<DMod, 'tags'> {
+  tags: TagSummary[]
+}
+
 export class ModRepository {
-  async findById(id: string): Promise<DMod | undefined> {
-    return database.query.mods.findFirst({
+  private async enrichWithTags(modsList: DMod[]): Promise<ModWithTags[]> {
+    const allTagIds = new Set<string>()
+    modsList.forEach((mod) => {
+      mod.tags?.forEach((t) => {
+        allTagIds.add(t)
+      })
+    })
+
+    const tagMap = new Map<string, TagSummary>()
+    if (allTagIds.size > 0) {
+      const foundTags = await database
+        .select({ id: tags.id, name: tags.name })
+        .from(tags)
+        .where(inArray(tags.id, Array.from(allTagIds)))
+
+      foundTags.forEach((t) => {
+        tagMap.set(t.id, t)
+      })
+    }
+
+    return modsList.map((mod) => ({
+      ...mod,
+      tags:
+        mod.tags
+          ?.map((tid) => tagMap.get(tid))
+          .filter((t): t is TagSummary => !!t) || [],
+    }))
+  }
+
+  async findById(id: string): Promise<ModWithTags | undefined> {
+    const mod = await database.query.mods.findFirst({
       where: eq(mods.id, id),
     })
+    if (!mod) return undefined
+    const [enriched] = await this.enrichWithTags([mod])
+    return enriched
   }
 
-  async findByWorkshopId(workshopId: string): Promise<DMod | undefined> {
-    return database.query.mods.findFirst({
+  async findByWorkshopId(workshopId: string): Promise<ModWithTags | undefined> {
+    const mod = await database.query.mods.findFirst({
       where: eq(mods.workshopId, workshopId),
     })
+    if (!mod) return undefined
+    const [enriched] = await this.enrichWithTags([mod])
+    return enriched
   }
 
-  async findBySteamModId(steamModId: string): Promise<DMod | undefined> {
-    return database.query.mods.findFirst({
+  async findBySteamModId(steamModId: string): Promise<ModWithTags | undefined> {
+    const mod = await database.query.mods.findFirst({
       where: arrayContains(mods.steamModId, [steamModId]),
     })
+    if (!mod) return undefined
+    const [enriched] = await this.enrichWithTags([mod])
+    return enriched
   }
 
-  async findByWorkshopIds(workshopIds: string[]): Promise<DMod[]> {
+  async findByWorkshopIds(workshopIds: string[]): Promise<ModWithTags[]> {
     if (workshopIds.length === 0) return []
-    return database.query.mods.findMany({
+    const modsList = await database.query.mods.findMany({
       where: inArray(mods.workshopId, workshopIds),
     })
+    return this.enrichWithTags(modsList)
   }
 
-  async create(data: CreateModData): Promise<DMod> {
+  async create(data: CreateModData): Promise<ModWithTags> {
     const [mod] = await database.insert(mods).values(data).returning()
-    return mod
+    const [enriched] = await this.enrichWithTags([mod])
+    return enriched
   }
 
   async findAll(params: ListModsParams) {
@@ -111,8 +160,10 @@ export class ModRepository {
       .limit(limit)
       .offset(offset)
 
+    const enrichedData = await this.enrichWithTags(data)
+
     return {
-      data,
+      data: enrichedData,
       pagination: {
         page,
         limit,
@@ -185,9 +236,13 @@ export class ModRepository {
       .limit(limit)
       .offset(offset)
 
+    const modsOnly = data.map((row) => row.mod)
+    const enrichedMods = await this.enrichWithTags(modsOnly)
+    const enrichedMap = new Map(enrichedMods.map((m) => [m.id, m]))
+
     return {
       data: data.map((row) => ({
-        ...row.mod,
+        ...(enrichedMap.get(row.mod.id) as ModWithTags),
         addedAt: row.addedAt,
         updatedAt: row.updatedAt,
       })),

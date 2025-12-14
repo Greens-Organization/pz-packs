@@ -76,8 +76,9 @@ export class AddModController {
         new Set(),
         addedMods,
       )
-    } catch (error: any) {
-      return new ApiResponse({ error: { message: error.message } }, 400)
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : 'Unknown error'
+      return new ApiResponse({ error: { message } }, 400)
     }
 
     return new ApiResponse(
