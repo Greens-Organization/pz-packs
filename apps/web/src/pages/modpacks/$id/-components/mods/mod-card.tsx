@@ -23,7 +23,7 @@ export function ModCard({ data, modpackId, canManage }: ModCardProps) {
 
   return (
     <Card className="flex flex-row items-start p-0 overflow-hidden gap-0">
-      <div className="relative bg-primary/30 dark:bg-primary aspect-square h-32 flex items-center justify-center text-muted-foreground/20 overflow-clip">
+      <div className="relative bg-primary/30 dark:bg-primary aspect-square h-full flex items-center justify-center text-muted-foreground/20 overflow-clip">
         {data.avatarUrl ? (
           <img
             src={data.avatarUrl}
@@ -43,35 +43,37 @@ export function ModCard({ data, modpackId, canManage }: ModCardProps) {
         )}
       </div>
       <div className="flex flex-col items-start justify-between gap-2 p-2 h-full w-full">
-        <div className="flex flex-col gap-2 items-start">
+        <div className="flex flex-col gap-2 items-start relative w-full">
           <Link
             to={data.steamUrl || '#'}
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:underline"
           >
-            <CardTitle>{data.name}</CardTitle>
+            <CardTitle className="hover:underline cursor-pointer break-all max-w-50">
+              {data.name}
+            </CardTitle>
           </Link>
-          <h2 className="text-muted-foreground py-1 px-2 bg-muted rounded-md w-fit text-xs">
-            {data.workshopId}
+          {canManage && (
+            <RemoveModDialog
+              className="absolute right-0 top-0"
+              modpackId={modpackId}
+              modId={data.id}
+              modName={data.name}
+            />
+          )}
+          <h2 className="text-muted-foreground font-light text-xs flex flex-row items-center gap-1">
+            Workshop ID:
+            <strong className="font-medium">{data.workshopId}</strong>
           </h2>
-          <ModDetail data={data} />
+          <ModRequiredModsDisplay data={data} />
         </div>
 
         <div className="flex flex-row justify-between items-end w-full gap-2 flex-wrap">
           <div className="flex flex-col items-start">
             <ModMapFolderDisplay data={data} />
             <ModIdsDisplay data={data} />
-            <ModRequiredModsDisplay data={data} />
           </div>
-
-          {canManage && (
-            <RemoveModDialog
-              modpackId={modpackId}
-              modId={data.id}
-              modName={data.name}
-            />
-          )}
+          <ModDetail data={data} />
         </div>
       </div>
     </Card>

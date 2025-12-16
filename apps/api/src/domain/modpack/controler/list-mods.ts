@@ -24,8 +24,8 @@ export async function listModsController({ query }: ListModsControllerParams) {
 
   const result = await modRepository.list({
     modpackId,
-    page: page ? parseInt(page) : 1,
-    limit: limit ? parseInt(limit) : 10,
+    page: page ? parseInt(page, 10) : 1,
+    limit: limit ? parseInt(limit, 10) : 10,
     search,
     sortBy,
     sortOrder,

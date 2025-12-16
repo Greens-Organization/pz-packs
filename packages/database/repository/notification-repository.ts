@@ -11,7 +11,7 @@ export const notificationRepository = {
     return notification
   },
 
-  listByUserId: async (userId: string, limit = 20) => {
+  listByUserId: async (userId: string, limit = 100) => {
     return database
       .select()
       .from(notifications)

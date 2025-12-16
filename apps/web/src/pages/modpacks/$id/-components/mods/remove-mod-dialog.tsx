@@ -10,6 +10,7 @@ import {
   DialogTrigger,
 } from '@org/design-system/components/ui/dialog'
 import { TrashIcon } from '@org/design-system/components/ui/icons'
+import { cn } from '@org/design-system/lib/utils'
 import { useState } from 'react'
 import { useRemoveModFromModpack } from '@/hooks/modpack/mod/use-remove-mod-from-modpack'
 
@@ -17,12 +18,14 @@ interface RemoveModDialogProps {
   modpackId: string
   modId: string
   modName: string
+  className?: string
 }
 
 export function RemoveModDialog({
   modpackId,
   modId,
   modName,
+  className,
 }: RemoveModDialogProps) {
   const [open, setOpen] = useState(false)
   const { mutate: removeMod, isPending } = useRemoveModFromModpack()
@@ -45,7 +48,10 @@ export function RemoveModDialog({
           <Button
             variant="ghost"
             size="icon"
-            className="text-destructive hover:text-destructive hover:bg-destructive/10"
+            className={cn(
+              'text-destructive hover:text-destructive hover:bg-destructive/10',
+              className,
+            )}
           >
             <TrashIcon className="w-4 h-4" />
           </Button>

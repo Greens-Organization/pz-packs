@@ -1,3 +1,4 @@
+import { Badge } from '@org/design-system/components/ui/badge'
 import { CopyButton } from '@org/design-system/components/ui/button-copy'
 import {
   Popover,
@@ -20,11 +21,20 @@ export function ModRequiredModsDisplay({ data }: { data: IModDTO }) {
         <PopoverTrigger
           disabled={!data.requiredMods || data.requiredMods.length === 0}
           className="text-muted-foreground text-sm"
-        >
-          {data.requiredMods?.length} required
-        </PopoverTrigger>
+          render={
+            <button
+              type="button"
+              className="px-2 py-1 rounded-md border-2 border-orange-300/30 bg-orange-500/5 text-orange-500 text-xs hover:bg-orange-500/80 hover:text-white cursor-pointer hover:border-orange-500/80"
+            >
+              {data.requiredMods?.length} required
+            </button>
+          }
+        ></PopoverTrigger>
         <PopoverPositioner>
           <PopoverContent className="overflow-y-auto">
+            <h2 className="font-medium text-muted-foreground">
+              Mods Required ({data.requiredMods?.length})
+            </h2>
             {data.requiredMods && data.requiredMods.length > 0 && (
               <ul className="list-none space-y-2">
                 {data.requiredMods.map((workshopId, index) => (
@@ -75,7 +85,7 @@ function ModRequiredCard({
   return (
     <div
       className={cn(
-        index === 0 && 'border-0',
+        index === 0 && 'border-none',
         'flex flex-row items-center border-t-2 border-border py-2 gap-2',
       )}
     >

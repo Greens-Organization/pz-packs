@@ -13,7 +13,7 @@ import { SteamDescription } from './steam-description'
 export function ModDetail({ data }: { data: IModDTO }) {
   return (
     <Dialog>
-      <DialogTrigger className="hover:underline text-sm text-muted-foreground">
+      <DialogTrigger className="hover:underline text-sm text-muted-foreground cursor-pointer">
         More Info
       </DialogTrigger>
       <DialogContent className="max-w-3xl">

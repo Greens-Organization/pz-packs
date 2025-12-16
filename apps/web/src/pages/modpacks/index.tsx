@@ -4,7 +4,7 @@ import { MyModpacksPage } from './-components/my-modpacks-page'
 
 const modpacksSearchSchema = z.object({
   page: z.coerce.number().int().positive().catch(1).default(1),
-  limit: z.coerce.number().int().positive().max(100).catch(12).default(12),
+  limit: z.coerce.number().int().positive().max(100).catch(33).default(33),
   search: z.string().optional().catch(undefined),
   sortBy: z
     .enum(['createdAt', 'updatedAt', 'name'])
