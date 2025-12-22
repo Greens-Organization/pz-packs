@@ -83,7 +83,7 @@ jobs:
           export PATH="$HOME/.fly/bin:$PATH"
 
           # Get previous successful release image
-          PREV_VERSION=$(fly releases --app zomboid-api --json -t "$FLY_API_TOKEN" | jq -r '.[1].ImageRef // empty')
+          PREV_VERSION=$(fly releases --app pz-packs --json -t "$FLY_API_TOKEN" | jq -r '.[1].ImageRef // empty')
 
           if [ -z "$PREV_VERSION" ]; then
             echo "No previous version found!"
@@ -97,4 +97,4 @@ jobs:
             -t "$FLY_API_TOKEN"
 
           sleep 10
-          curl -f https://zomboid-api.fly.dev/health || exit 1
+          curl -f https://pz-packs.fly.dev/health || exit 1
