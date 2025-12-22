@@ -1,5 +1,6 @@
 import {
   CheckCircleIcon,
+  DownloadSimpleIcon,
   InfoIcon,
   WarningIcon,
   XCircleIcon,
@@ -8,6 +9,7 @@ import { cn } from '@org/design-system/lib/utils'
 import { formatDistanceToNow } from 'date-fns'
 import type { JSX } from 'react'
 import { useMarkNotificationAsRead } from '@/hooks/notification'
+import { ModpackService } from '@/services/modpack'
 import type { INotificationDTO } from '@/services/notification'
 
 const icons: Record<string, JSX.Element> = {
@@ -20,8 +22,19 @@ const icons: Record<string, JSX.Element> = {
 export function Notification({ data }: { data: INotificationDTO }) {
   const markAsRead = useMarkNotificationAsRead()
 
-  const handleMarkAsRead = (id: string) => {
-    markAsRead.mutate(id)
+  const metadata = data.metadata ? JSON.parse(data.metadata) : null
+  const isDownloadAction = metadata?.action === 'download-server-file'
+
+  const handleClick = () => {
+    if (!data.isRead) {
+      markAsRead.mutate(data.id)
+    }
+  }
+
+  const handleDownload = () => {
+    if (isDownloadAction && metadata.exportId) {
+      ModpackService.download(metadata.exportId)
+    }
   }
 
   return (
@@ -33,11 +46,11 @@ export function Notification({ data }: { data: INotificationDTO }) {
         'flex flex-row items-start w-full gap-4 justify-between relative border-b border-border/10',
         !data.isRead && 'bg-muted/20',
       )}
-      onClick={() => !data.isRead && handleMarkAsRead(data.id)}
+      onClick={handleClick}
     >
       <div className="ml-2">{icons[data.type] || icons.default}</div>
 
-      <div className="flex flex-col items-start text-left gap-4">
+      <div className="flex flex-col items-start text-left gap-2 w-full">
         <h3
           className={cn(
             'text-sm font-medium leading-none flex flex-row gap-2 items-center',
@@ -49,7 +62,17 @@ export function Notification({ data }: { data: INotificationDTO }) {
         <p className="text-sm text-muted-foreground text-left leading-relaxed ">
           {data.content}
         </p>
-        <span className="text-xs text-muted-foreground">
+        {isDownloadAction && (
+          <button
+            type="button"
+            className="flex items-center gap-2 text-xs text-blue-500 font-medium mt-1 cursor-pointer hover:bg-muted-foreground/10 py-1 px-2 rounded-md"
+            onClick={handleDownload}
+          >
+            <DownloadSimpleIcon className="w-4 h-4" weight="bold" />
+            Click to download
+          </button>
+        )}
+        <span className="text-xs text-muted-foreground mt-1">
           {formatDistanceToNow(new Date(data.createdAt), {
             addSuffix: true,
           })}

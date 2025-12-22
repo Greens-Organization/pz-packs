@@ -1,5 +1,6 @@
 import { archiveModpackService } from './archive-modpack.service'
 import { createModpackService } from './create-modpack.service'
+import { downloadServerFile } from './download-server-file.service'
 import { requestServerFile } from './export-server-file.service'
 import { getModpackService } from './get-modpack.service'
 import { getPublicModpackService } from './get-public-modpack.service'
@@ -16,4 +17,5 @@ export const ModpackService = {
   update: updateModpackService,
   archive: archiveModpackService,
   export: requestServerFile,
+  download: downloadServerFile,
 }
