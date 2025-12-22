@@ -26,7 +26,9 @@ export function ModMapFolderDisplay({ data }: { data: IModDTO }) {
             {data.mapFolders && data.mapFolders.length > 0 && (
               <ul className="list-disc pl-4 text-sm">
                 {data.mapFolders.map((mapFolder, index) => (
-                  <li key={index}>{mapFolder}</li>
+                  <li key={index} className="select-all">
+                    {mapFolder}
+                  </li>
                 ))}
               </ul>
             )}

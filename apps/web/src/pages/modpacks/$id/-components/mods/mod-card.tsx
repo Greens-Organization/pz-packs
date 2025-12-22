@@ -63,7 +63,9 @@ export function ModCard({ data, modpackId, canManage }: ModCardProps) {
           )}
           <h2 className="text-muted-foreground font-light text-xs flex flex-row items-center gap-1">
             Workshop ID:
-            <strong className="font-medium">{data.workshopId}</strong>
+            <strong className="font-medium select-all">
+              {data.workshopId}
+            </strong>
           </h2>
           <ModRequiredModsDisplay data={data} />
         </div>

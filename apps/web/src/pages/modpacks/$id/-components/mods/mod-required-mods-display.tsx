@@ -94,7 +94,7 @@ function ModRequiredCard({
           src={data.avatarUrl}
           alt={data.name}
           width={32}
-          className="w-12 h-12 rounded-md"
+          className="w-12 h-12 rounded-md border-2 border-border/5"
         />
       )}
       <div className="flex flex-col gap-1 w-full text-sm">
@@ -104,12 +104,14 @@ function ModRequiredCard({
         >
           {data.name}
         </Link>
-        <span className="text-muted-foreground py-1 px-2 bg-muted rounded-md w-fit text-xs">
+        <span className="text-muted-foreground py-1 px-2 bg-muted rounded-md w-fit text-xs select-all select">
           {workshopId}
         </span>
-        <span className="text-muted-foreground w-fit text-xs">
-          {data.requiredMods?.length} required
-        </span>
+        {data.requiredMods && data.requiredMods?.length > 0 && (
+          <span className="text-muted-foreground w-fit text-xs">
+            {data.requiredMods?.length} required
+          </span>
+        )}
       </div>
     </div>
   )

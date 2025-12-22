@@ -26,7 +26,9 @@ export function ModIdsDisplay({ data }: { data: IModDTO }) {
             {data.steamModId && data.steamModId.length > 0 && (
               <ul className="list-disc pl-4 text-sm">
                 {data.steamModId.map((mapFolder, index) => (
-                  <li key={index}>{mapFolder}</li>
+                  <li key={index} className="select-all">
+                    {mapFolder}
+                  </li>
                 ))}
               </ul>
             )}

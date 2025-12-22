@@ -1,2 +1,9 @@
 @import "tailwindcss";
 @import "@org/design-system/styles/main.css";
+
+@layer base {
+  ::selection {
+    @apply bg-accent;
+    @apply text-foreground;
+  }
+}
