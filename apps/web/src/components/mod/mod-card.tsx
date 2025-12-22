@@ -5,7 +5,7 @@ import {
   CardTitle,
 } from '@org/design-system/components/ui/card'
 import { useTheme } from '@org/design-system/providers'
-import { useLocation, useNavigate } from '@tanstack/react-router'
+import { useNavigate } from '@tanstack/react-router'
 import type { IModDTO } from '@/services/mod/dtos'
 
 interface ModpackCardProps {

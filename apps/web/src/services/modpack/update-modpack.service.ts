@@ -1,11 +1,10 @@
-import type { DModpack } from '@org/database/schemas'
 import { env } from '@/env'
 import { headers } from '../helpers'
 import type { IModpackDTO } from './dtos'
 
 export async function updateModpackService(
   id: string,
-  data: Partial<DModpack>,
+  data: Partial<IModpackDTO>,
 ) {
   const url = `${env.VITE_API_URL}/modpacks/${id}`
 

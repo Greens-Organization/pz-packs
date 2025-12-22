@@ -1,8 +1,8 @@
-import type { DModpack } from '@org/database/schemas'
+import type { IModDTO } from '@/services/mod/dtos'
 import { ModCard } from './mod-card'
 
 interface ModsGridProps {
-  mods: DModpack[]
+  mods: IModDTO[]
   isLoading?: boolean
   emptyMessage?: string
 }
