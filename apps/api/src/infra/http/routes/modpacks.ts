@@ -1,10 +1,13 @@
+import { t } from 'elysia'
 import { addModInModpackSchema } from '@/domain/mod/validation/add-mod-in-modpack.schema'
 import { modpackController } from '@/domain/modpack/controler'
 import { makeAddModController } from '@/domain/modpack/factories/make-add-mod-controller'
 import { makeCreateModpackController } from '@/domain/modpack/factories/make-create-modpack-controller'
 import { makeGetImportModpackStatusController } from '@/domain/modpack/factories/make-get-import-modpack-status-controller'
+import { makeGetServerFileController } from '@/domain/modpack/factories/make-get-server-file-controller'
 import { makeImportModpackController } from '@/domain/modpack/factories/make-import-modpack-controller'
 import { makeListModpacksController } from '@/domain/modpack/factories/make-list-modpacks-controller'
+import { makeRequestServerFileController } from '@/domain/modpack/factories/make-request-server-file-controller'
 import {
   addMemberSchema,
   createModpackSchema,
@@ -108,6 +111,56 @@ export function modpacksRoutes(app: Server) {
           tags: ['Modpacks'],
           description: 'Update modpack details (owner only)',
           summary: 'Update Modpack',
+        },
+      },
+    )
+
+    // Request Server File Generation
+    route.post(
+      '/:id/server-file',
+      async ({ status, params, body, user }) => {
+        const controller = makeRequestServerFileController()
+        const res = await controller.handle({ params, body, user })
+        return status(res.status, res.value)
+      },
+      {
+        auth: true,
+        params: modpackIdParamSchema,
+        body: t.Object({
+          version: t.Union([t.Literal('41x'), t.Literal('42x')]),
+        }),
+        detail: {
+          tags: ['Modpacks'],
+          description: 'Request generation of server configuration file',
+          summary: 'Request Server File',
+        },
+      },
+    )
+
+    // Download Server File
+    route.get(
+      '/export/:exportId/download',
+      async ({ status, params, set }) => {
+        const controller = makeGetServerFileController()
+        const res = await controller.handle({ params })
+
+        if (res.status === 200 && res.value.filename) {
+          set.headers['Content-Disposition'] =
+            `attachment; filename="${res.value.filename}"`
+          set.headers['Content-Type'] = 'text/plain'
+          return res.value.content
+        }
+
+        return status(res.status, res.value)
+      },
+      {
+        params: t.Object({
+          exportId: t.String(),
+        }),
+        detail: {
+          tags: ['Modpacks'],
+          description: 'Download generated server configuration file',
+          summary: 'Download Server File',
         },
       },
     )

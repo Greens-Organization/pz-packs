@@ -1,0 +1,52 @@
+import { Button } from '@org/design-system/components/ui/button'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@org/design-system/components/ui/dialog'
+import { BoxArrowDownIcon } from '@org/design-system/components/ui/icons'
+import { useState } from 'react'
+import type { IModpackDTO } from '@/services/modpack/dtos'
+import { ExportModpackForm } from './export-modpack-form'
+
+interface AddMemberDialogProps {
+  modpack: IModpackDTO
+  className?: string
+}
+
+export function ExportModpackDialog({ modpack }: AddMemberDialogProps) {
+  const [open, setOpen] = useState(false)
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger
+        render={
+          <Button
+            variant="outline"
+            size="icon"
+            aria-label="Download server file"
+          >
+            <BoxArrowDownIcon className="h-4 w-4" weight="bold" />
+          </Button>
+        }
+      />
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Export Server File</DialogTitle>
+          <DialogDescription>
+            Choose the Project Zomboid version to export the server file for the
+            modpack <span className="font-semibold">{modpack.name}</span>.
+            Waiting for the exporting process to finish.
+          </DialogDescription>
+        </DialogHeader>
+        <ExportModpackForm
+          modpackId={modpack.id}
+          onSuccess={() => setOpen(false)}
+        />
+      </DialogContent>
+    </Dialog>
+  )
+}

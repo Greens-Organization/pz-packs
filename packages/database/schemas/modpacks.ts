@@ -84,3 +84,20 @@ export const modpacksModsRelations = relations(modpacksMods, ({ one }) => ({
     references: [mods.id],
   }),
 }))
+
+export const modpackExports = pgTable('modpack_exports', {
+  id,
+  modpackId: uuid('modpack_id')
+    .notNull()
+    .references(() => modpacks.id),
+  userId: uuid('user_id').references(() => users.id),
+  version: text('version').notNull(),
+  status: text('status', { enum: ['pending', 'completed', 'failed'] })
+    .default('pending')
+    .notNull(),
+  fileContent: text('file_content'),
+  createdAt,
+  updatedAt,
+})
+
+export type DModpackExport = InferSelectModel<typeof modpackExports>

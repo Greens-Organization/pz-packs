@@ -3,7 +3,8 @@
     "**/*.ts",
     "**/*.tsx",
     "../../packages/**/*",
-    "src/pages/modpacks/$id/-components/update/update-modpack-dialog.tsx"
+    "src/pages/modpacks/$id/-components/update/update-modpack-dialog.tsx",
+    "../../packages/validation/forms/modpack/.schema copy.ts"
   ],
   "extends": "@org/tsconfig/vite.json",
   "compilerOptions": {

@@ -6,7 +6,8 @@ import { ModpackVisibilityBadge } from '@/components/modpack/index.ts'
 import { ModpackVerifiedBadge } from '@/components/modpack/modpack-verified-badge.tsx'
 import { useCanManageModpack, useModpack, usePublicModpack } from '@/hooks'
 import { authClient } from '@/lib/auth.ts'
-import { ArchiveModpackDialog } from './archive-mobdpack-dialog.tsx'
+import { ArchiveModpackDialog } from './archive-modpack-dialog.tsx'
+import { ExportModpackDialog } from './export-modpack/export-modpack-dialog.tsx'
 import { Members } from './members/members.tsx'
 import { ModsList } from './mods/mods-list'
 import { UpdateModpackDialog } from './update/update-modpack-dialog.tsx'
@@ -112,6 +113,9 @@ export function MyModpacksPages() {
           </ButtonGroup>
           {canManage && (
             <ButtonGroup>
+              <ButtonGroup>
+                <ExportModpackDialog modpack={modpack} />
+              </ButtonGroup>
               <ButtonGroup>
                 <UpdateModpackDialog modpack={modpack} />
               </ButtonGroup>
