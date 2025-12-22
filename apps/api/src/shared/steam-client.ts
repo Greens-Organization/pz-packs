@@ -9,15 +9,30 @@ import type {
 export class SteamClient {
   private apiKey: string
   private appId: string
+  private lastRequestTime = 0
+  private readonly REQUEST_DELAY = 5000 // 5 seconds delay
 
   constructor(apiKey: string, appId = '108600') {
     this.apiKey = apiKey
     this.appId = appId
   }
 
+  private async enforceDelay() {
+    const now = Date.now()
+    const timeSinceLastRequest = now - this.lastRequestTime
+
+    if (timeSinceLastRequest < this.REQUEST_DELAY) {
+      const waitTime = this.REQUEST_DELAY - timeSinceLastRequest
+      await new Promise((resolve) => setTimeout(resolve, waitTime))
+    }
+
+    this.lastRequestTime = Date.now()
+  }
+
   async querySteamWorkshopFiles(
     workshopId: string,
   ): Promise<SteamWorkshopFileDetails | null> {
+    await this.enforceDelay()
     const url = `https://api.steampowered.com/IPublishedFileService/GetDetails/v1/?key=${this.apiKey}&query_type=0&cursor=*&appid=${this.appId}&return_previews=true&return_details=true&publishedfileids[0]=${encodeURIComponent(workshopId)}`
 
     try {
@@ -42,6 +57,7 @@ export class SteamClient {
   }
 
   async scrapeWorkshopPage(workshopId: string): Promise<ScrapedModInfo> {
+    await this.enforceDelay()
     const workshopUrl = `https://steamcommunity.com/sharedfiles/filedetails/?id=${workshopId}`
 
     try {
