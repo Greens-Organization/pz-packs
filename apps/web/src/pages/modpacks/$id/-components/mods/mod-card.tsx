@@ -19,8 +19,6 @@ export function ModCard({ data, modpackId, canManage }: ModCardProps) {
 
   if (!data || !modpackId) return null
 
-  console.log(data)
-
   return (
     <Card className="flex flex-row items-start p-0 overflow-hidden gap-0">
       <div className="relative bg-primary/30 dark:bg-primary aspect-square h-full flex items-center justify-center text-muted-foreground/20 overflow-clip">
