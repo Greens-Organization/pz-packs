@@ -1,12 +1,3 @@
-import type { ConnectionOptions } from 'bullmq'
-import { env } from '@/env'
+import { bullmqConnection } from '@org/cache'
 
-const url = new URL(env.SECONDARY_DATABASE_URL)
-
-export const connection: ConnectionOptions = {
-  host: url.hostname,
-  port: Number(url.port),
-  username: url.username,
-  password: url.password,
-  maxRetriesPerRequest: null,
-}
+export const connection = bullmqConnection
