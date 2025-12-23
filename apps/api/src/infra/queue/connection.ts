@@ -8,4 +8,5 @@ export const connection: ConnectionOptions = {
   port: Number(url.port),
   username: url.username,
   password: url.password,
+  maxRetriesPerRequest: null,
 }

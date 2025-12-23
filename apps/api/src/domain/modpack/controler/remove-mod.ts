@@ -20,7 +20,6 @@ export async function removeModController({
   user,
 }: RemoveModControllerParams) {
   const { id: modpackId, modId } = params
-  console.log(modpackId, modId)
 
   // 1. Check permissions
   const modpack = await modpackRepository.findById(modpackId)
