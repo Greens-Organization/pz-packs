@@ -10,7 +10,8 @@
     "docker:kill": "docker compose down --volumes --remove-orphans"
   },
   "dependencies": {
-    "@org/validation": "workspace:*"
+    "@org/validation": "workspace:*",
+    "ioredis": "5.8.2"
   },
   "devDependencies": {
     "@org/tsconfig": "workspace:*"
