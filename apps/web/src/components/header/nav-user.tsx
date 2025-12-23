@@ -20,6 +20,7 @@ import {
   SunIcon,
 } from '@org/design-system/components/ui/icons'
 import { useTheme } from '@org/design-system/providers'
+import { Link } from '@tanstack/react-router'
 import { authClient } from '@/lib/auth'
 import { getInitials } from '@/utils/string'
 
@@ -66,7 +67,7 @@ export function NavUser() {
       </DropdownMenuTrigger>
       <DropdownMenuPositioner align="start">
         <DropdownMenuContent className="w-56">
-          <DropdownMenuItem>My Profile</DropdownMenuItem>
+          <DropdownMenuItem render={<Link to="/my-profile">My Profile</Link>} />
           <DropdownMenuItem disabled>Support</DropdownMenuItem>
           <DropdownMenuItem disabled>Github</DropdownMenuItem>
           <DropdownMenuItem onClick={toggleTheme}>

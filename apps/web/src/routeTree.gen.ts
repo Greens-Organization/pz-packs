@@ -9,11 +9,17 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './pages/__root'
+import { Route as MyProfileRouteImport } from './pages/my-profile'
 import { Route as ModpacksLayoutRouteImport } from './pages/modpacks/layout'
 import { Route as IndexRouteImport } from './pages/index'
 import { Route as ModpacksIndexRouteImport } from './pages/modpacks/index'
 import { Route as ModpacksIdIndexRouteImport } from './pages/modpacks/$id/index'
 
+const MyProfileRoute = MyProfileRouteImport.update({
+  id: '/my-profile',
+  path: '/my-profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ModpacksLayoutRoute = ModpacksLayoutRouteImport.update({
   id: '/modpacks',
   path: '/modpacks',
@@ -38,11 +44,13 @@ const ModpacksIdIndexRoute = ModpacksIdIndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/modpacks': typeof ModpacksLayoutRouteWithChildren
+  '/my-profile': typeof MyProfileRoute
   '/modpacks/': typeof ModpacksIndexRoute
   '/modpacks/$id': typeof ModpacksIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/my-profile': typeof MyProfileRoute
   '/modpacks': typeof ModpacksIndexRoute
   '/modpacks/$id': typeof ModpacksIdIndexRoute
 }
@@ -50,24 +58,39 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/modpacks': typeof ModpacksLayoutRouteWithChildren
+  '/my-profile': typeof MyProfileRoute
   '/modpacks/': typeof ModpacksIndexRoute
   '/modpacks/$id/': typeof ModpacksIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/modpacks' | '/modpacks/' | '/modpacks/$id'
+  fullPaths: '/' | '/modpacks' | '/my-profile' | '/modpacks/' | '/modpacks/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/modpacks' | '/modpacks/$id'
-  id: '__root__' | '/' | '/modpacks' | '/modpacks/' | '/modpacks/$id/'
+  to: '/' | '/my-profile' | '/modpacks' | '/modpacks/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/modpacks'
+    | '/my-profile'
+    | '/modpacks/'
+    | '/modpacks/$id/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ModpacksLayoutRoute: typeof ModpacksLayoutRouteWithChildren
+  MyProfileRoute: typeof MyProfileRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/my-profile': {
+      id: '/my-profile'
+      path: '/my-profile'
+      fullPath: '/my-profile'
+      preLoaderRoute: typeof MyProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/modpacks': {
       id: '/modpacks'
       path: '/modpacks'
@@ -116,6 +139,7 @@ const ModpacksLayoutRouteWithChildren = ModpacksLayoutRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ModpacksLayoutRoute: ModpacksLayoutRouteWithChildren,
+  MyProfileRoute: MyProfileRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
