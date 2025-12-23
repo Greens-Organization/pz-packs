@@ -1,11 +1,8 @@
-import { Queue } from 'bullmq'
-import { connection } from '../connection'
+import { appQueue } from '../instance'
 
-export const MODPACK_IMPORT_QUEUE_NAME = 'modpack-import'
+export const MODPACK_IMPORT_QUEUE_NAME = appQueue.name
 
-export const modpackImportQueue = new Queue(MODPACK_IMPORT_QUEUE_NAME, {
-  connection,
-})
+export const modpackImportQueue = appQueue
 
 export interface ModpackImportJobData {
   modpackId: string

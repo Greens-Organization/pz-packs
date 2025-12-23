@@ -1,7 +1,6 @@
-import { Queue } from 'bullmq'
-import { connection } from '../connection'
+import { appQueue } from '../instance'
 
-export const SERVER_FILE_GENERATION_QUEUE_NAME = 'server-file-generation'
+export const SERVER_FILE_GENERATION_QUEUE_NAME = appQueue.name
 
 export interface ServerFileGenerationJobData {
   exportId: string
@@ -9,9 +8,4 @@ export interface ServerFileGenerationJobData {
   modpackId: string
 }
 
-export const serverFileGenerationQueue = new Queue<ServerFileGenerationJobData>(
-  SERVER_FILE_GENERATION_QUEUE_NAME,
-  {
-    connection,
-  },
-)
+export const serverFileGenerationQueue = appQueue

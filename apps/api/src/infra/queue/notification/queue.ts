@@ -1,7 +1,6 @@
-import { Queue } from 'bullmq'
-import { connection } from '../connection'
+import { appQueue } from '../instance'
 
-export const NOTIFICATION_QUEUE_NAME = 'notifications'
+export const NOTIFICATION_QUEUE_NAME = appQueue.name
 
 export interface NotificationJobData {
   userId: string
@@ -11,6 +10,4 @@ export interface NotificationJobData {
   metadata?: string
 }
 
-export const notificationQueue = new Queue(NOTIFICATION_QUEUE_NAME, {
-  connection,
-})
+export const notificationQueue = appQueue
