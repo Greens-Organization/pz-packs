@@ -75,7 +75,8 @@ export class ImportModpackController {
 
       return new ApiResponse(
         {
-          message: 'Import started in background',
+          message:
+            'The modpack is being imported in the background; this may take a few minutes. You will be notified when it is finished.',
           jobId: job.id,
         },
         200,
