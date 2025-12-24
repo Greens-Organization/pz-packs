@@ -1,5 +1,10 @@
 import { Toaster } from '@org/design-system/components/ui/sonner'
-import { createRootRoute, HeadContent, Outlet } from '@tanstack/react-router'
+import {
+  createRootRoute,
+  HeadContent,
+  Outlet,
+  Scripts,
+} from '@tanstack/react-router'
 import * as React from 'react'
 import { AppHeader } from '@/components/header'
 import { ReactQueryProvider } from '@/lib/react-query'
@@ -46,6 +51,7 @@ function RootComponent() {
         <AppHeader />
         <Outlet />
       </ReactQueryProvider>
+      <Scripts />
     </React.Fragment>
   )
 }
