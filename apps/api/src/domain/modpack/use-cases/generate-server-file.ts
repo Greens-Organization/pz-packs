@@ -58,7 +58,7 @@ export class GenerateServerFileUseCase {
       // Format content
       const content = [
         `Mods=${uniqueMods.join(';')}`,
-        `Map=${uniqueMaps.join(';')}`,
+        `Map=${[...uniqueMaps, 'Muldraugh, KY'].join(';')}`,
         `WorkshopItems=${uniqueWorkshopItems.join(';')}`,
       ].join('\n')
 
