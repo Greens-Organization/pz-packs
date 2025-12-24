@@ -1,11 +1,13 @@
-![Monorepo Template](.github/template.png)
+![Monorepo Template](.github/pz-packs.png)
 
 <div align="center">
 
 # PZ Packs
+Hello, Survivor! 🧟‍♂️
 
-PZ Modpacks
+Welcome to PZ Packs, your ultimate toolkit for the apocalypse. Whether you need a complex modpack or a quick server configuration, we’ve got you covered. 
 
+Streamline your setup so you can focus on what matters: surviving the Knox Event.
 
 </div>
 
@@ -141,12 +143,12 @@ monorepo-template/
 │   └── web/          # Frontend (React + Vite)
 ├── packages/
 │   ├── auth/         # Authentication (Better Auth)
-│   ├── cache/         # Cache (Redis)
+│   ├── cache/         # Cache (Redis + BullMQ)
 │   ├── database/      # Database (Drizzle + PostgreSQL)
 │   ├── design-system/ # Shared UI components
 │   ├── linter/        # Linting configuration
 │   ├── tsconfig/      # TypeScript configurations
-│   └── validation/    # Validation schemas (Zod)
+│   └── validation/    # Validation schemas (Zod) [deprecated]
 └── scripts/           # Utility scripts
 ```
 
@@ -176,121 +178,6 @@ This command will copy all `.env.example` files to `.env` in the respective apps
 - 📖 [Auth Package](./packages/auth/README.md)
 - 📖 [Database Package](./packages/database/README.md)
 - 📖 [Cache Package](./packages/cache/README.md)
-
-## 🚢 Deploy and CI/CD
-
-The project uses GitHub Actions for automatic CI/CD. Deployment is triggered when a **release is published** on GitHub.
-
-### How It Works
-
-1. **Trigger:** Publishing a release on GitHub
-2. **Change Detection:** The workflow detects changes in `apps/web` or `apps/api`
-3. **Automatic Deploy:**
-   - **Web:** Deploy to Vercel
-   - **API:** Deploy to Fly.io
-4. **Health Check:** Automatic API health verification
-5. **Rollback:** Automatic rollback on failure
-
-### GitHub Secrets Configuration
-
-For CI/CD to work, you need to add the following secrets on GitHub:
-
-#### 1. Access Secrets Configuration
-
-1. Go to the repository on GitHub
-2. Click **Settings**
-3. In the sidebar, click **Secrets and variables** → **Actions**
-4. Click **New repository secret**
-
-#### 2. Required Secrets
-
-##### `VERCEL_TOKEN`
-
-Vercel access token for frontend deployment.
-
-**How to get:**
-
-1. Go to [Vercel Dashboard](https://vercel.com/dashboard)
-2. Go to **Settings** → **Tokens**
-3. Click **Create Token**
-4. Give the token a name (e.g., "GitHub Actions")
-5. Copy the generated token
-6. **Documentation:** [Vercel - Authentication](https://vercel.com/docs/security/api-tokens)
-
-**Add to GitHub:**
-
-- Name: `VERCEL_TOKEN`
-- Value: Paste the copied token
-- Click **Add secret**
-
-##### `FLY_API_TOKEN`
-
-Fly.io access token for backend deployment.
-
-**How to get:**
-
-1. Go to [Fly.io Dashboard](https://fly.io/dashboard)
-2. Run in terminal: `fly auth token`
-3. Copy the displayed token
-4. **Documentation:** [Fly.io - Access Tokens](https://fly.io/docs/reference/tokens/)
-
-**Add to GitHub:**
-
-- Name: `FLY_API_TOKEN`
-- Value: Paste the copied token
-- Click **Add secret**
-
-### Environment Variables Configuration on Platforms
-
-#### Fly.io (Backend)
-
-After creating the app on Fly.io, add environment variables:
-
-**Via Dashboard:**
-
-1. Go to [Fly.io Dashboard](https://fly.io/dashboard)
-2. Select your app (`monorepo-template-api`)
-3. Go to **Secrets**
-4. Add each environment variable
-5. **Documentation:** [Fly.io - Secrets](https://fly.io/docs/reference/secrets/)
-
-**Reference Links:**
-
-- 📖 [Fly.io - Environment Variables](https://fly.io/docs/reference/secrets/)
-- 📖 [Fly.io - PostgreSQL](https://fly.io/docs/postgres/)
-- 📖 [Fly.io - Redis](https://fly.io/docs/redis/)
-
-#### Vercel (Frontend)
-
-**Via Dashboard:**
-
-1. Go to [Vercel Dashboard](https://vercel.com/dashboard)
-2. Select your project (`monorepo-template-web`)
-3. Go to **Settings** → **Environment Variables**
-4. Add the variable:
-   - **Key:** `VITE_API_URL`
-   - **Value:** Your API URL (e.g., `https://monorepo-template-api.fly.dev`)
-   - **Environment:** Production, Preview, Development (select as needed)
-5. Click **Save**
-6. **Documentation:** [Vercel - Environment Variables](https://vercel.com/docs/projects/environment-variables)
-
-**Reference Links:**
-
-- 📖 [Vercel - Environment Variables](https://vercel.com/docs/projects/environment-variables)
-- 📖 [Vercel - Deployments](https://vercel.com/docs/deployments/overview)
-
-### How to Create a Release
-
-To trigger deployment:
-
-1. Go to the **Releases** tab on GitHub
-2. Click **Create a new release**
-3. Choose the tag (or create a new one)
-4. Fill in the title and description
-5. Click **Publish release**
-6. CI/CD will be triggered automatically
-
-**Documentation:** [GitHub - Creating Releases](https://docs.github.com/en/repositories/releasing-projects-on-github/managing-releases-in-a-repository)
 
 ## 📚 Apps and Packages Documentation
 
