@@ -20,16 +20,6 @@ export type PublicModpacksFiltersSchema = z.infer<
 export const Route = createFileRoute('/')({
   validateSearch: publicModpacksSearchSchema,
   component: RouteComponent,
-  head: async () => ({
-    meta: [
-      { title: 'PZ Packs' },
-      {
-        name: 'description',
-        content:
-          'Project Zomboid modpack platform. Discover, create, and share modpacks with ease!',
-      },
-    ],
-  }),
 })
 
 function RouteComponent() {
