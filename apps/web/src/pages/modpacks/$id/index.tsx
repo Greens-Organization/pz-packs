@@ -35,17 +35,24 @@ export const Route = createFileRoute('/modpacks/$id/')({
     const modpack = loaderData
     const title = modpack ? `${modpack.name} | PZ Packs` : 'Modpack | PZ Packs'
     const description = modpack?.description || 'View this modpack on PZ Packs'
-    const image = modpack?.avatarUrl || '/brand/pz-packs-logo.svg'
+    const image = modpack?.avatarUrl || '/brand/pzpacks-thumb.png'
+    const url =
+      `https://pzpacks.grngroup.net/modpacks/${modpack?.id}` ||
+      'https://pzpacks.grngroup.net/modpacks/'
 
     return {
       meta: [
         { title },
         { name: 'description', content: description },
+        { property: 'og:url', content: url },
+        { property: 'og:type', content: 'website' },
         { property: 'og:title', content: title },
         { property: 'og:description', content: description },
         { property: 'og:image', content: image },
         { property: 'og:type', content: 'website' },
         { name: 'twitter:card', content: 'summary_large_image' },
+        { property: 'twitter:url', content: url },
+        { property: 'twitter:domain', content: 'pzpacks.grngroup.net' },
         { name: 'twitter:title', content: title },
         { name: 'twitter:description', content: description },
         { name: 'twitter:image', content: image },

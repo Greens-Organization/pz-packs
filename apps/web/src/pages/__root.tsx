@@ -21,22 +21,25 @@ export const Route = createRootRoute({
         content:
           'Project Zomboid modpack platform. Discover, create, and share modpacks with ease!',
       },
+      { property: 'og:url', content: 'https://pzpacks.grngroup.net' },
+      { property: 'og:type', content: 'website' },
       { property: 'og:title', content: 'PZ Packs' },
       {
         property: 'og:description',
         content:
           'Project Zomboid modpack platform. Discover, create, and share modpacks with ease!',
       },
-      { property: 'og:image', content: '/brand/pz-packs-logo.svg' },
-      { property: 'og:type', content: 'website' },
-      { name: 'twitter:card', content: 'summary_large_image' },
+      { property: 'og:image', content: '/brand/pzpacks-thumb.png' },
+      { property: 'twitter:card', content: 'summary_large_image' },
+      { property: 'twitter:domain', content: 'pzpacks.grngroup.net' },
+      { property: 'twitter:url', content: 'https://pzpacks.grngroup.net' },
       { name: 'twitter:title', content: 'PZ Packs' },
       {
         name: 'twitter:description',
         content:
           'Project Zomboid modpack platform. Discover, create, and share modpacks with ease!',
       },
-      { name: 'twitter:image', content: '/brand/pz-packs-logo.svg' },
+      { name: 'twitter:image', content: '/brand/pzpacks-thumb.png' },
       { name: 'theme-color', content: '#4ade80' },
     ],
   }),
