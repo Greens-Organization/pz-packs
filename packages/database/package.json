@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@org/validation": "workspace:*",
-    "drizzle-orm": "0.45.0"
+    "drizzle-orm": "0.45.2"
   },
   "devDependencies": {
     "@org/tsconfig": "workspace:*",
